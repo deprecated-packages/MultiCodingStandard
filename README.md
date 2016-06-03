@@ -10,7 +10,7 @@
 ## Install
 
 ```sh
-$ composer require symplify/multi-coding-standard
+composer require symplify/multi-coding-standard
 ```
 
 ## Usage
