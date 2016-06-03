@@ -1,0 +1,3 @@
+services:
+    - Symplify\MultiCodingStandard\Console\Application
+    - Symplify\MultiCodingStandard\Command\CheckCommand
