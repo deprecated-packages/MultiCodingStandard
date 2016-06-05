@@ -1,4 +1,7 @@
 {
+    "standards": [
+        "PSR-2"
+    ],
     "sniffs": [
         "SymplifyCodingStandard\\Sniffs\\Naming\\AbstractClassNameSniff"
     ]

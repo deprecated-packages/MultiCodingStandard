@@ -66,7 +66,6 @@ final class CheckCommand extends Command
     {
         foreach ((new Finder())->in($path)->files() as $filePath => $fileInfo) {
             $file = $this->codeSniffer->processFile($filePath);
-            var_dump($file->getErrorCount());
         }
     }
 }
