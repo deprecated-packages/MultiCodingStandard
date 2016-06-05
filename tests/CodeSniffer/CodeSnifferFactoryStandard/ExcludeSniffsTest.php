@@ -7,7 +7,7 @@ use PHPUnit_Framework_Assert;
 use PHPUnit_Framework_TestCase;
 use Symplify\MultiCodingStandard\Tests\ContainerFactory;
 
-final class StandardWithExclusionTest extends PHPUnit_Framework_TestCase
+final class ExcludeSniffs extends PHPUnit_Framework_TestCase
 {
     /**
      * @var PHP_CodeSniffer
