@@ -16,6 +16,6 @@ final class Application extends SymfonyApplication
      */
     public function __construct()
     {
-        parent::__construct('Symplify Coding CodeSnifferFactoryStandard', null);
+        parent::__construct('Symplify Coding Standard', null);
     }
 }
