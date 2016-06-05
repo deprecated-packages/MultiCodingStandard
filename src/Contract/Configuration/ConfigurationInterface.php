@@ -10,7 +10,12 @@ namespace Symplify\MultiCodingStandard\Contract\Configuration;
 interface ConfigurationInterface
 {
     /**
-     * @return array
+     * @return string[]
      */
     public function getActiveSniffs();
+
+    /**
+     * @return string[]
+     */
+    public function getActiveStandards();
 }

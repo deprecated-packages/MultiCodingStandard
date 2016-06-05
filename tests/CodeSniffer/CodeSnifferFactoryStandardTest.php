@@ -21,12 +21,9 @@ final class CodeSnifferFactoryStandardTest extends PHPUnit_Framework_TestCase
         $this->codeSniffer = $container->getByType(PHP_CodeSniffer::class);
     }
 
-    public function testRegisteredSniffs()
+    public function testRegisteredSniffsFromPsr2()
     {
-        // 2DO: configuration -> load whole PSR-2 standard
-
         $registeredSniffs = PHPUnit_Framework_Assert::getObjectAttribute($this->codeSniffer, 'sniffs');
-        $this->assertCount(1, $registeredSniffs);
-        $this->assertSame([AbstractClassNameSniff::class => AbstractClassNameSniff::class], $registeredSniffs);
+        $this->assertCount(41, $registeredSniffs);
     }
 }

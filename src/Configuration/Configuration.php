@@ -24,7 +24,7 @@ final class Configuration implements ConfigurationInterface
     private $sniffNaming;
 
     /**
-     * @var null|array
+     * @var array
      */
     private $multiCsFile;
 
@@ -39,14 +39,25 @@ final class Configuration implements ConfigurationInterface
      */
     public function getActiveSniffs()
     {
-        if ($this->multiCsFile === null) {
-            $this->multiCsFile = $this->multiCsFileLoader->load();
-        }
+        $this->ensureMultiJsFileIsLoaded();
 
         if (isset($this->multiCsFile['sniffs'])) {
             return $this->normalizeSniffsFromClassesToUnderscoreLowercase($this->multiCsFile['sniffs']);
         }
 
+        return [];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getActiveStandards()
+    {
+        $this->ensureMultiJsFileIsLoaded();
+
+        if (isset($this->multiCsFile['standards'])) {
+            return $this->multiCsFile['standards'];
+        }
 
         return [];
     }
@@ -57,5 +68,12 @@ final class Configuration implements ConfigurationInterface
     private function normalizeSniffsFromClassesToUnderscoreLowercase(array $sniffs)
     {
         return $this->sniffNaming->detectUnderscoreLowercaseFromSniffClasses($sniffs);
+    }
+
+    private function ensureMultiJsFileIsLoaded()
+    {
+        if ($this->multiCsFile === null) {
+            $this->multiCsFile = $this->multiCsFileLoader->load();
+        }
     }
 }
