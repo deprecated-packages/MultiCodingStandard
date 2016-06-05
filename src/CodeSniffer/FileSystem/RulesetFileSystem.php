@@ -22,7 +22,7 @@ final class RulesetFileSystem implements RulesetFileSystemInterface
     /**
      * @var strings[]
      */
-    private $rulesets;
+    private $rulesets = [];
 
     /**
      * @param string $vendorDir
