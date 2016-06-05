@@ -23,7 +23,7 @@ final class SniffFileSystemTest extends PHPUnit_Framework_TestCase
         $foundSniffFiles = $this->sniffFileSystem->findAllSniffs();
         $this->assertCount(2, $foundSniffFiles);
 
-        $this->assertContains('tests/CodeSniffer/FileSystem/SniffFileSystemSource/OneSniff.php', $foundSniffFiles[1]);
-        $this->assertContains('tests/CodeSniffer/FileSystem/SniffFileSystemSource/TwoSniff.php', $foundSniffFiles[0]);
+        $this->assertContains('tests/CodeSniffer/FileSystem/SniffFileSystemSource/OneSniff.php', $foundSniffFiles[0]);
+        $this->assertContains('tests/CodeSniffer/FileSystem/SniffFileSystemSource/TwoSniff.php', $foundSniffFiles[1]);
     }
 }

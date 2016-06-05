@@ -35,7 +35,7 @@ final class MultiCsFileLoader implements MultiCsFileLoaderInterface
      */
     public function load()
     {
-        $file = $this->getMcsFileLocation();
+        $file = $this->getMultiCsFileLocation();
         $fileContent = file_get_contents($file);
 
         return Json::decode($fileContent, true);
@@ -44,7 +44,7 @@ final class MultiCsFileLoader implements MultiCsFileLoaderInterface
     /**
      * @return string
      */
-    private function getMcsFileLocation()
+    private function getMultiCsFileLocation()
     {
         return $this->baseDir.'/'.self::JSON_FILE_NAME;
     }
