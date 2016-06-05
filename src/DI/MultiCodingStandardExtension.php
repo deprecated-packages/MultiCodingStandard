@@ -19,7 +19,6 @@ final class MultiCodingStandardExtension extends CompilerExtension
      */
     private $defaults = [
         'configPath' => '%appDir%/../multi-cs.json'
-        # %appDir%/../multi-cs.json
     ];
 
     /**
