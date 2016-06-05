@@ -26,4 +26,25 @@ final class SniffNaming implements SniffNamingInterface
 
         return $underscoreLowercaseNames;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function detectDottedFromFilePaths(array $sniffFilePaths)
+    {
+        $dottedNames = [];
+        foreach ($sniffFilePaths as $sniffFilePath) {
+            $sniffFilePathParts = explode(DIRECTORY_SEPARATOR, $sniffFilePath);
+            $sniffFilePathParts = array_slice($sniffFilePathParts, -4);
+            
+            unset($sniffFilePathParts[1]); // drop "/Sniffs" 
+            $sniffFilePathParts[3] = substr($sniffFilePathParts[3], 0, -9); // drop "Sniff.php"
+
+            $dottedName = implode($sniffFilePathParts, '.');
+
+            $dottedNames[$dottedName] = $sniffFilePath;
+        }
+
+        return $dottedNames;
+    }
 }

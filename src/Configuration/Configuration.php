@@ -14,6 +14,21 @@ use Symplify\MultiCodingStandard\Contract\Configuration\MultiCsFileLoaderInterfa
 final class Configuration implements ConfigurationInterface
 {
     /**
+     * @var string
+     */
+    const STANDARDS = 'standards';
+
+    /**
+     * @var string
+     */
+    const SNIFFS = 'sniffs';
+    
+    /**
+     * @var string
+     */
+    const EXCLUDED_SNIFFS = 'exclude-sniffs';
+    
+    /**
      * @var MultiCsFileLoaderInterface
      */
     private $multiCsFileLoader;
@@ -41,8 +56,8 @@ final class Configuration implements ConfigurationInterface
     {
         $this->ensureMultiJsFileIsLoaded();
 
-        if (isset($this->multiCsFile['sniffs'])) {
-            return $this->normalizeSniffsFromClassesToUnderscoreLowercase($this->multiCsFile['sniffs']);
+        if (isset($this->multiCsFile[self::SNIFFS])) {
+            return $this->normalizeSniffsFromClassesToUnderscoreLowercase($this->multiCsFile[self::SNIFFS]);
         }
 
         return [];
@@ -55,8 +70,22 @@ final class Configuration implements ConfigurationInterface
     {
         $this->ensureMultiJsFileIsLoaded();
 
-        if (isset($this->multiCsFile['standards'])) {
-            return $this->multiCsFile['standards'];
+        if (isset($this->multiCsFile[self::STANDARDS])) {
+            return $this->multiCsFile[self::STANDARDS];
+        }
+
+        return [];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getExcludedSniffs()
+    {
+        $this->ensureMultiJsFileIsLoaded();
+
+        if (isset($this->multiCsFile[self::EXCLUDED_SNIFFS])) {
+            return $this->multiCsFile[self::EXCLUDED_SNIFFS];
         }
 
         return [];

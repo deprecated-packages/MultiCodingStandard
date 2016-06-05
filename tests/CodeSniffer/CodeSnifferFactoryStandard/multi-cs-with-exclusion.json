@@ -2,7 +2,7 @@
     "standards": [
         "PSR2"
     ],
-    "exclude-sniff": [
-
+    "exclude-sniffs": [
+        "Generic.ControlStructures.InlineControlStructure"
     ]
 }

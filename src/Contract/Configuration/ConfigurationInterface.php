@@ -17,5 +17,10 @@ interface ConfigurationInterface
     /**
      * @return string[]
      */
+    public function getExcludedSniffs();
+
+    /**
+     * @return string[]
+     */
     public function getActiveStandards();
 }

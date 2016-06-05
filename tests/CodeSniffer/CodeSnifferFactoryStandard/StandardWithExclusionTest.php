@@ -7,7 +7,7 @@ use PHPUnit_Framework_Assert;
 use PHPUnit_Framework_TestCase;
 use Symplify\MultiCodingStandard\Tests\ContainerFactory;
 
-final class CodeSnifferFactoryStandardWithExclusionTest extends PHPUnit_Framework_TestCase
+final class StandardWithExclusionTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var PHP_CodeSniffer
@@ -23,7 +23,6 @@ final class CodeSnifferFactoryStandardWithExclusionTest extends PHPUnit_Framewor
     public function testRegisteredSniffsFromPsr2WithExclusion()
     {
         $registeredSniffs = PHPUnit_Framework_Assert::getObjectAttribute($this->codeSniffer, 'sniffs');
-        // todo: exclude 1 and make it 40
-        $this->assertCount(41, $registeredSniffs);
+        $this->assertCount(40, $registeredSniffs);
     }
 }

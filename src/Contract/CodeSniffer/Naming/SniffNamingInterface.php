@@ -13,4 +13,9 @@ interface SniffNamingInterface
      * @return string[]
      */
     public function detectUnderscoreLowercaseFromSniffClasses(array $sniffClasses);
+
+    /**
+     * @return string[]
+     */
+    public function detectDottedFromFilePaths(array $sniffFilePaths);
 }
