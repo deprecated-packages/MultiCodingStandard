@@ -1,6 +1,6 @@
 <?php
 
-namespace Symplify\MultiCodingStandard\Tests\CodeSniffer\CodeSnifferFactorySniff;
+namespace Symplify\MultiCodingStandard\Tests\CodeSniffer\CodeSnifferFactory\Sniff;
 
 use PHP_CodeSniffer;
 use phpunit\framework\TestCase;
@@ -8,7 +8,7 @@ use PHPUnit_Framework_Assert;
 use Symplify\MultiCodingStandard\Tests\ContainerFactory;
 use SymplifyCodingStandard\Sniffs\Naming\AbstractClassNameSniff;
 
-final class CodeSnifferFactorySniffTest extends TestCase
+final class SniffTest extends TestCase
 {
     /**
      * @var PHP_CodeSniffer
@@ -17,7 +17,7 @@ final class CodeSnifferFactorySniffTest extends TestCase
 
     protected function setUp()
     {
-        $container = (new ContainerFactory())->createWithConfig(__DIR__.'/config/config.neon');
+        $container = (new ContainerFactory())->createWithConfig(__DIR__ . '/config/config.neon');
         $this->codeSniffer = $container->getByType(PHP_CodeSniffer::class);
     }
 
@@ -28,7 +28,7 @@ final class CodeSnifferFactorySniffTest extends TestCase
 
     public function testProcessFile()
     {
-        $file = $this->codeSniffer->processFile(__DIR__ . '/CodeSnifferFactorySource/SomeAbstractClass.php');
+        $file = $this->codeSniffer->processFile(__DIR__ . '/SniffSource/SomeAbstractClass.php');
         $this->assertSame(1, $file->getErrorCount());
 
         $error = $file->getErrors()[5][10][0];
