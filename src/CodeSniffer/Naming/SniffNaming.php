@@ -45,6 +45,7 @@ final class SniffNaming implements SniffNamingInterface
 
     /**
      * @param string $classNameParts
+     *
      * @return string
      */
     private function removeSniffSuffix($classNameParts)

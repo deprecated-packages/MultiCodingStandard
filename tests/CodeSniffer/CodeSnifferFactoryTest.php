@@ -24,16 +24,16 @@ final class CodeSnifferFactoryTest extends PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(PHP_CodeSniffer::class, $this->codeSniffer);
     }
-    
+
     public function testProcessFile()
     {
         $file = $this->codeSniffer->processFile(__DIR__.'/CodeSnifferFactorySource/SomeAbstractClass.php');
         $this->assertSame(1, $file->getErrorCount());
-        
-        $error = $file->getErrors()[5][10][0]        ;
+
+        $error = $file->getErrors()[5][10][0];
         $this->assertSame('SymplifyCodingStandard.Naming.AbstractClassName', $error['source']);
     }
-    
+
     public function testRegisteredSniffs()
     {
         $registeredSniffs = PHPUnit_Framework_Assert::getObjectAttribute($this->codeSniffer, 'sniffs');

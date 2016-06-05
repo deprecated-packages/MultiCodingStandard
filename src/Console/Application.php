@@ -11,11 +11,11 @@ use Symfony\Component\Console\Application as SymfonyApplication;
 
 final class Application extends SymfonyApplication
 {
-	/**
-	 * {@inheritdoc}
-	 */
-	public function __construct()
-	{
-		parent::__construct('Symplify Coding Standard', null);
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct()
+    {
+        parent::__construct('Symplify Coding Standard', null);
+    }
 }

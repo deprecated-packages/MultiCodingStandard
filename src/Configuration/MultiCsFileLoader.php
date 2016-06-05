@@ -37,6 +37,7 @@ final class MultiCsFileLoader implements MultiCsFileLoaderInterface
     {
         $file = $this->getMcsFileLocation();
         $fileContent = file_get_contents($file);
+
         return Json::decode($fileContent, true);
     }
 

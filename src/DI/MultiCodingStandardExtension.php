@@ -33,7 +33,7 @@ final class MultiCodingStandardExtension extends CompilerExtension
     private function loadServicesFromConfig()
     {
         $containerBuilder = $this->getContainerBuilder();
-        $config = $this->loadFromFile(__DIR__ . '/../config/services.neon');
+        $config = $this->loadFromFile(__DIR__.'/../config/services.neon');
         $this->compiler->parseServices($containerBuilder, $config);
     }
 
@@ -43,12 +43,13 @@ final class MultiCodingStandardExtension extends CompilerExtension
 
         $containerBuilder = $this->getContainerBuilder();
         foreach ($containerBuilder->findByType(Command::class) as $definition) {
-            $consoleApplication->addSetup('add', ['@' . $definition->getClass()]);
+            $consoleApplication->addSetup('add', ['@'.$definition->getClass()]);
         }
     }
 
     /**
      * @param string $type
+     *
      * @return ServiceDefinition
      */
     private function getDefinitionByType($type)

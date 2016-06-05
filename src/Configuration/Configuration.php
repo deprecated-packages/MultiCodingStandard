@@ -47,7 +47,7 @@ final class Configuration implements ConfigurationInterface
             return $this->normalizeSniffsFromClassesToUnderscoreLowercase($this->multiCsFile['sniffs']);
             // return $this->normalizeSniffsFromClassesToNames($this->multiCsFile['sniffs']);
         }
-        
+
         return [];
     }
 

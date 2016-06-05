@@ -40,6 +40,7 @@ final class CodeSnifferFactory implements CodeSnifferFactoryInterface
         $codeSniffer = new PHP_CodeSniffer();
         $this->setupSniffs($codeSniffer);
         $this->setupErrorRecoding($codeSniffer);
+
         return $codeSniffer;
     }
 

@@ -28,7 +28,7 @@ final class CheckCommand extends Command
 
         $this->codeSniffer = $codeSniffer;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -48,8 +48,8 @@ final class CheckCommand extends Command
             foreach ($input->getArgument('path') as $path) {
                 $this->checkDirectory($path);
             }
-            return 0;
 
+            return 0;
         } catch (Exception $exception) {
             $output->write(
                 sprintf('<error>%s</error>', $exception->getMessage())
