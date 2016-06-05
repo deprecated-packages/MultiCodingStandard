@@ -46,10 +46,7 @@ final class CodeSnifferFactory implements CodeSnifferFactoryInterface
 
     private function setupSniffs(PHP_CodeSniffer $codeSniffer)
     {
-        $codeSniffer->registerSniffs(
-            $this->sniffFileSystem->findAllSniffs(),
-            $this->configuration->getActiveSniffs()
-        );
+        $codeSniffer->registerSniffs($this->sniffFileSystem->findAllSniffs(), $this->configuration->getActiveSniffs());
         $codeSniffer->populateTokenListeners();
     }
 

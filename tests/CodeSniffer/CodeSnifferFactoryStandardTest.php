@@ -8,7 +8,7 @@ use PHPUnit_Framework_TestCase;
 use Symplify\MultiCodingStandard\Tests\ContainerFactory;
 use SymplifyCodingStandard\Sniffs\Naming\AbstractClassNameSniff;
 
-final class CodeSnifferFactoryTest extends PHPUnit_Framework_TestCase
+final class CodeSnifferFactoryStandardTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var PHP_CodeSniffer
@@ -21,22 +21,10 @@ final class CodeSnifferFactoryTest extends PHPUnit_Framework_TestCase
         $this->codeSniffer = $container->getByType(PHP_CodeSniffer::class);
     }
 
-    public function testInstance()
-    {
-        $this->assertInstanceOf(PHP_CodeSniffer::class, $this->codeSniffer);
-    }
-
-    public function testProcessFile()
-    {
-        $file = $this->codeSniffer->processFile(__DIR__.'/CodeSnifferFactorySource/SomeAbstractClass.php');
-        $this->assertSame(1, $file->getErrorCount());
-
-        $error = $file->getErrors()[5][10][0];
-        $this->assertSame('SymplifyCodingStandard.Naming.AbstractClassName', $error['source']);
-    }
-
     public function testRegisteredSniffs()
     {
+        // 2DO: configuration -> load whole PSR-2 standard
+
         $registeredSniffs = PHPUnit_Framework_Assert::getObjectAttribute($this->codeSniffer, 'sniffs');
         $this->assertCount(1, $registeredSniffs);
         $this->assertSame([AbstractClassNameSniff::class => AbstractClassNameSniff::class], $registeredSniffs);
