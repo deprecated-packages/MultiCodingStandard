@@ -12,10 +12,17 @@ final class ContainerFactory
      */
     public function create()
     {
+        return $this->createWithConfig(__DIR__.'/../src/config/config.neon');
+    }
+
+    /**
+     * @return Container
+     */
+    public function createWithConfig($config)
+    {
         $configurator = new Configurator();
         $configurator->setTempDirectory(TEMP_DIR);
-        $configurator->addConfig(__DIR__.'/../src/config/config.neon');
-        $configurator->addParameters(['eee' => 'eee']);
+        $configurator->addConfig($config);
 
         return $configurator->createContainer();
     }

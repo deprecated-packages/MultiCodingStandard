@@ -14,4 +14,4 @@ services:
 
     # configuration
     - Symplify\MultiCodingStandard\Configuration\Configuration
-    - Symplify\MultiCodingStandard\Configuration\MultiCsFileLoader(%appDir%/../multi-cs.json)
+    - Symplify\MultiCodingStandard\Configuration\MultiCsFileLoader(%configPath%)

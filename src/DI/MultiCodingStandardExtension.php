@@ -15,10 +15,21 @@ use Symplify\MultiCodingStandard\Console\Application;
 final class MultiCodingStandardExtension extends CompilerExtension
 {
     /**
+     * @var string[]
+     */
+    private $defaults = [
+        'configPath' => '%appDir%/../multi-cs.json'
+        # %appDir%/../multi-cs.json
+    ];
+
+    /**
      * {@inheritdoc}
      */
     public function loadConfiguration()
     {
+        $config = $this->validateConfig($this->defaults);
+        $this->getContainerBuilder()->parameters += $config;
+
         $this->loadServicesFromConfig();
     }
 

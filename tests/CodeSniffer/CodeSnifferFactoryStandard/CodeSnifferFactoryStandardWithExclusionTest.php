@@ -1,14 +1,13 @@
 <?php
 
-namespace Symplify\MultiCodingStandard\Tests\CodeSniffer;
+namespace Symplify\MultiCodingStandard\Tests\CodeSniffer\CodeSnifferFactoryStandard;
 
 use PHP_CodeSniffer;
 use PHPUnit_Framework_Assert;
 use PHPUnit_Framework_TestCase;
 use Symplify\MultiCodingStandard\Tests\ContainerFactory;
-use SymplifyCodingStandard\Sniffs\Naming\AbstractClassNameSniff;
 
-final class CodeSnifferFactoryStandardTest extends PHPUnit_Framework_TestCase
+final class CodeSnifferFactoryStandardWithExclusionTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var PHP_CodeSniffer
@@ -17,13 +16,14 @@ final class CodeSnifferFactoryStandardTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $container = (new ContainerFactory())->create();
+        $container = (new ContainerFactory())->createWithConfig(__DIR__ . '/config/config-with-exclusion.neon');
         $this->codeSniffer = $container->getByType(PHP_CodeSniffer::class);
     }
 
-    public function testRegisteredSniffsFromPsr2()
+    public function testRegisteredSniffsFromPsr2WithExclusion()
     {
         $registeredSniffs = PHPUnit_Framework_Assert::getObjectAttribute($this->codeSniffer, 'sniffs');
+        // todo: exclude 1 and make it 40
         $this->assertCount(41, $registeredSniffs);
     }
 }
