@@ -19,7 +19,7 @@ final class RulesetFileSystem implements RulesetFileSystemInterface
     private $vendorDir;
 
     /**
-     * @var strings[]
+     * @var string[]
      */
     private $rulesets = [];
 
