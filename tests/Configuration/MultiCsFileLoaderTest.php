@@ -15,7 +15,7 @@ final class MultiCsFileLoaderTest extends TestCase
 
     protected function setUp()
     {
-        $this->multiCsFileLoader = new MultiCsFileLoader(__DIR__.'/multi-cs.json');
+        $this->multiCsFileLoader = new MultiCsFileLoader(__DIR__.'/multi-cs-key-value.json');
     }
 
     public function testLoad()
