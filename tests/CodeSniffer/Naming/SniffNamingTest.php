@@ -2,11 +2,11 @@
 
 namespace Symplify\MultiCodingStandard\Tests\CodeSniffer\Naming;
 
-use PHPUnit_Framework_TestCase;
+use phpunit\framework\TestCase;
 use Symplify\MultiCodingStandard\CodeSniffer\Naming\SniffNaming;
 use Symplify\MultiCodingStandard\Contract\CodeSniffer\Naming\SniffNamingInterface;
 
-final class SniffNamingTest extends PHPUnit_Framework_TestCase
+final class SniffNamingTest extends TestCase
 {
     /**
      * @var SniffNamingInterface

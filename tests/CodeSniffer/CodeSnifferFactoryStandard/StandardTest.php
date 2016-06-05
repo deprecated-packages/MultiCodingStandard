@@ -3,11 +3,11 @@
 namespace Symplify\MultiCodingStandard\Tests\CodeSniffer\CodeSnifferFactoryStandard;
 
 use PHP_CodeSniffer;
+use phpunit\framework\TestCase;
 use PHPUnit_Framework_Assert;
-use PHPUnit_Framework_TestCase;
 use Symplify\MultiCodingStandard\Tests\ContainerFactory;
 
-final class StandardTest extends PHPUnit_Framework_TestCase
+final class StandardTest extends TestCase
 {
     /**
      * @var PHP_CodeSniffer

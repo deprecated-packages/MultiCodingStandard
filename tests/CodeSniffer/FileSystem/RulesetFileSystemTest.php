@@ -2,11 +2,11 @@
 
 namespace Symplify\MultiCodingStandard\Tests\CodeSniffer\FileSystem;
 
-use PHPUnit_Framework_TestCase;
+use phpunit\framework\TestCase;
 use Symplify\MultiCodingStandard\CodeSniffer\FileSystem\RulesetFileSystem;
 use Symplify\MultiCodingStandard\Contract\CodeSniffer\FileSystem\RulesetFileSystemInterface;
 
-final class RulesetFileSystemTest extends PHPUnit_Framework_TestCase
+final class RulesetFileSystemTest extends TestCase
 {
     /**
      * @var RulesetFileSystemInterface

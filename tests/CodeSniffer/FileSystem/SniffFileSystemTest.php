@@ -2,11 +2,11 @@
 
 namespace Symplify\MultiCodingStandard\Tests\CodeSniffer\FileSystem;
 
-use PHPUnit_Framework_TestCase;
+use phpunit\framework\TestCase;
 use Symplify\MultiCodingStandard\CodeSniffer\FileSystem\SniffFileSystem;
 use Symplify\MultiCodingStandard\Contract\CodeSniffer\FileSystem\SniffFileSystemInterface;
 
-final class SniffFileSystemTest extends PHPUnit_Framework_TestCase
+final class SniffFileSystemTest extends TestCase
 {
     /**
      * @var SniffFileSystemInterface

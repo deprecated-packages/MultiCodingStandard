@@ -3,12 +3,12 @@
 namespace Symplify\MultiCodingStandard\Tests\CodeSniffer\CodeSnifferFactorySniff;
 
 use PHP_CodeSniffer;
+use phpunit\framework\TestCase;
 use PHPUnit_Framework_Assert;
-use PHPUnit_Framework_TestCase;
 use Symplify\MultiCodingStandard\Tests\ContainerFactory;
 use SymplifyCodingStandard\Sniffs\Naming\AbstractClassNameSniff;
 
-final class CodeSnifferFactorySniffTest extends PHPUnit_Framework_TestCase
+final class CodeSnifferFactorySniffTest extends TestCase
 {
     /**
      * @var PHP_CodeSniffer
