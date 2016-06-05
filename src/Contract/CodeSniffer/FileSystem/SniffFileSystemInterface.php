@@ -7,11 +7,10 @@
 
 namespace Symplify\MultiCodingStandard\Contract\CodeSniffer\FileSystem;
 
-interface RulesetFileSystemInterface
+interface SniffFileSystemInterface
 {
     /**
-     * @param string $standardName
-     * @return string
+     * @return string[]
      */
-    public function getRulesetPathForStandardName($standardName);
+    public function findAllSniffs();
 }

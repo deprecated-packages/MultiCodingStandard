@@ -28,12 +28,27 @@ final class SniffNaming implements SniffNamingInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function detectUnderscoreLowercaseFromSniffClasses(array $sniffClasses)
+    {
+        $underscoreLowercaseNames = [];
+        foreach ($sniffClasses as $sniffClass) {
+            $classNameParts = explode('\\', $sniffClass);
+            $underscoreName = implode($classNameParts, '_');
+
+            $underscoreLowercaseNames[] = strtolower($underscoreName);
+        }
+
+        return $underscoreLowercaseNames;
+    }
+
+    /**
      * @param string $classNameParts
      * @return string
      */
     private function removeSniffSuffix($classNameParts)
     {
-        $sniffName = substr(implode($classNameParts, '.'), 0, -5);
-        return $sniffName;
+        return substr(implode($classNameParts, '.'), 0, -5);
     }
 }

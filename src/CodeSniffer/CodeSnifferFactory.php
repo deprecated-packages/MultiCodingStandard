@@ -8,9 +8,8 @@
 namespace Symplify\MultiCodingStandard\CodeSniffer;
 
 use PHP_CodeSniffer;
+use Symplify\MultiCodingStandard\CodeSniffer\FileSystem\SniffFileSystem;
 use Symplify\MultiCodingStandard\Contract\CodeSniffer\CodeSnifferFactoryInterface;
-use Symplify\MultiCodingStandard\Contract\CodeSniffer\FileSystem\RulesetFileSystemInterface;
-use Symplify\MultiCodingStandard\Contract\CodeSniffer\Naming\StandardNamingInterface;
 use Symplify\MultiCodingStandard\Contract\Configuration\ConfigurationInterface;
 
 final class CodeSnifferFactory implements CodeSnifferFactoryInterface
@@ -21,23 +20,16 @@ final class CodeSnifferFactory implements CodeSnifferFactoryInterface
     private $configuration;
 
     /**
-     * @var StandardNamingInterface
+     * @var SniffFileSystem
      */
-    private $standardNaming;
-
-    /**
-     * @var RulesetFileSystemInterface
-     */
-    private $rulesetFileSystem;
+    private $sniffFileSystem;
 
     public function __construct(
         ConfigurationInterface $configuration,
-        StandardNamingInterface $standardNaming,
-        RulesetFileSystemInterface $rulesetFileSystem
+        SniffFileSystem $sniffFileSystem
     ) {
         $this->configuration = $configuration;
-        $this->standardNaming = $standardNaming;
-        $this->rulesetFileSystem = $rulesetFileSystem;
+        $this->sniffFileSystem = $sniffFileSystem;
     }
 
     /**
@@ -46,18 +38,24 @@ final class CodeSnifferFactory implements CodeSnifferFactoryInterface
     public function create()
     {
         $codeSniffer = new PHP_CodeSniffer();
-        $this->setupStandardsAndSniffs($codeSniffer);
-
+        $this->setupSniffs($codeSniffer);
+        $this->setupErrorRecoding($codeSniffer);
         return $codeSniffer;
     }
 
-    private function setupStandardsAndSniffs(PHP_CodeSniffer $codeSniffer)
+    private function setupSniffs(PHP_CodeSniffer $codeSniffer)
     {
-        foreach ($this->configuration->getActiveSniffs() as $sniffName) {
-            $standardName = $this->standardNaming->detectStandardNameFromSniffName($sniffName);
-            $standardRuleset = $this->rulesetFileSystem->getRulesetPathForStandardName($standardName);
+        $codeSniffer->registerSniffs(
+            $this->sniffFileSystem->findAllSniffs(),
+            $this->configuration->getActiveSniffs()
+        );
+        $codeSniffer->populateTokenListeners();
+    }
 
-            $codeSniffer->initStandard($standardRuleset, $this->configuration->getActiveSniffs());
-        }
+    private function setupErrorRecoding(PHP_CodeSniffer $codeSniffer)
+    {
+        $codeSniffer->cli->setCommandLineValues([
+            '-s', // showSources must be on, so that errors are recorded
+        ]);
     }
 }
