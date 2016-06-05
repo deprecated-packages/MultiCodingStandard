@@ -25,4 +25,14 @@ final class SniffNamingTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame(['somestandard_sniff_group_specificsniff'], $names);
     }
+
+    public function testDetectDottedFromFilePaths()
+    {
+        $filePaths = ['/vendor/SomeStandard/Sniffs/Group/SpecificSniff.php'];
+        $names = $this->sniffNaming->detectDottedFromFilePaths($filePaths);
+
+        $this->assertSame([
+            'SomeStandard.Group.Specific' => $filePaths[0]
+        ], $names);
+    }
 }
