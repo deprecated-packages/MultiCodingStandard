@@ -14,6 +14,21 @@ use Symplify\MultiCodingStandard\Contract\Configuration\MultiCsFileLoaderInterfa
 final class Configuration implements ConfigurationInterface
 {
     /**
+     * @var string
+     */
+    const STANDARDS = 'standards';
+
+    /**
+     * @var string
+     */
+    const SNIFFS = 'sniffs';
+    
+    /**
+     * @var string
+     */
+    const EXCLUDED_SNIFFS = 'exclude-sniffs';
+    
+    /**
      * @var MultiCsFileLoaderInterface
      */
     private $multiCsFileLoader;
@@ -24,7 +39,7 @@ final class Configuration implements ConfigurationInterface
     private $sniffNaming;
 
     /**
-     * @var null|array
+     * @var array
      */
     private $multiCsFile;
 
@@ -39,24 +54,41 @@ final class Configuration implements ConfigurationInterface
      */
     public function getActiveSniffs()
     {
-        if ($this->multiCsFile === null) {
-            $this->multiCsFile = $this->multiCsFileLoader->load();
-        }
+        $this->ensureMultiJsFileIsLoaded();
 
-        if (isset($this->multiCsFile['sniffs'])) {
-            return $this->normalizeSniffsFromClassesToUnderscoreLowercase($this->multiCsFile['sniffs']);
-            // return $this->normalizeSniffsFromClassesToNames($this->multiCsFile['sniffs']);
+        if (isset($this->multiCsFile[self::SNIFFS])) {
+            return $this->normalizeSniffsFromClassesToUnderscoreLowercase($this->multiCsFile[self::SNIFFS]);
         }
 
         return [];
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
-    private function normalizeSniffsFromClassesToNames(array $sniffs)
+    public function getActiveStandards()
     {
-        return $this->sniffNaming->detectSniffNameFromSniffClasses($sniffs);
+        $this->ensureMultiJsFileIsLoaded();
+
+        if (isset($this->multiCsFile[self::STANDARDS])) {
+            return $this->multiCsFile[self::STANDARDS];
+        }
+
+        return [];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getExcludedSniffs()
+    {
+        $this->ensureMultiJsFileIsLoaded();
+
+        if (isset($this->multiCsFile[self::EXCLUDED_SNIFFS])) {
+            return $this->multiCsFile[self::EXCLUDED_SNIFFS];
+        }
+
+        return [];
     }
 
     /**
@@ -65,5 +97,12 @@ final class Configuration implements ConfigurationInterface
     private function normalizeSniffsFromClassesToUnderscoreLowercase(array $sniffs)
     {
         return $this->sniffNaming->detectUnderscoreLowercaseFromSniffClasses($sniffs);
+    }
+
+    private function ensureMultiJsFileIsLoaded()
+    {
+        if ($this->multiCsFile === null) {
+            $this->multiCsFile = $this->multiCsFileLoader->load();
+        }
     }
 }

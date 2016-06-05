@@ -15,19 +15,14 @@ final class MultiCsFileLoader implements MultiCsFileLoaderInterface
     /**
      * @var string
      */
-    const JSON_FILE_NAME = 'multi-cs.json';
+    private $multiCsJsonFile;
 
     /**
-     * @var string
+     * @param string $multiCsJsonFile
      */
-    private $baseDir;
-
-    /**
-     * @param string $baseDir
-     */
-    public function __construct($baseDir)
+    public function __construct($multiCsJsonFile)
     {
-        $this->baseDir = $baseDir;
+        $this->multiCsJsonFile = $multiCsJsonFile;
     }
 
     /**
@@ -35,17 +30,7 @@ final class MultiCsFileLoader implements MultiCsFileLoaderInterface
      */
     public function load()
     {
-        $file = $this->getMcsFileLocation();
-        $fileContent = file_get_contents($file);
-
+        $fileContent = file_get_contents($this->multiCsJsonFile);
         return Json::decode($fileContent, true);
-    }
-
-    /**
-     * @return string
-     */
-    private function getMcsFileLocation()
-    {
-        return $this->baseDir.'/'.self::JSON_FILE_NAME;
     }
 }

@@ -32,7 +32,8 @@ final class SniffFileSystem implements SniffFileSystemInterface
     {
         $sniffFilesInfo = (new Finder())->files()
             ->in($this->vendorDir)
-            ->name('*Sniff.php');
+            ->name('*Sniff.php')
+            ->sortByName();
 
         return array_keys(iterator_to_array($sniffFilesInfo));
     }

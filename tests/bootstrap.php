@@ -7,6 +7,6 @@ $tempDir = __DIR__.'/temp/'.getmypid();
 define('TEMP_DIR', $tempDir);
 @mkdir($tempDir, 0777, true);
 
-register_shutdown_function(function () {
-     Nette\Utils\FileSystem::delete(__DIR__.'/temp');
+register_shutdown_function(function () use ($tempDir) {
+     Nette\Utils\FileSystem::delete($tempDir);
 });

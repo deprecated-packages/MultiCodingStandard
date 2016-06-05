@@ -1,0 +1,8 @@
+{
+    "standards": [
+        "PSR2"
+    ],
+    "exclude-sniffs": [
+        "Generic.ControlStructures.InlineControlStructure"
+    ]
+}

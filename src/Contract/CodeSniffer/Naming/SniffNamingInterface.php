@@ -12,10 +12,10 @@ interface SniffNamingInterface
     /**
      * @return string[]
      */
-    public function detectSniffNameFromSniffClasses(array $sniffClasses);
+    public function detectUnderscoreLowercaseFromSniffClasses(array $sniffClasses);
 
     /**
      * @return string[]
      */
-    public function detectUnderscoreLowercaseFromSniffClasses(array $sniffClasses);
+    public function detectDottedFromFilePaths(array $sniffFilePaths);
 }

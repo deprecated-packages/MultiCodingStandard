@@ -14,22 +14,6 @@ final class SniffNaming implements SniffNamingInterface
     /**
      * {@inheritdoc}
      */
-    public function detectSniffNameFromSniffClasses(array $sniffClasses)
-    {
-        $sniffNames = [];
-        foreach ($sniffClasses as $sniffClass) {
-            $classNameParts = explode('\\', $sniffClass);
-            unset($classNameParts[1]);
-
-            $sniffNames[] = $this->removeSniffSuffix($classNameParts);
-        }
-
-        return $sniffNames;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function detectUnderscoreLowercaseFromSniffClasses(array $sniffClasses)
     {
         $underscoreLowercaseNames = [];
@@ -44,12 +28,23 @@ final class SniffNaming implements SniffNamingInterface
     }
 
     /**
-     * @param string $classNameParts
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    private function removeSniffSuffix($classNameParts)
+    public function detectDottedFromFilePaths(array $sniffFilePaths)
     {
-        return substr(implode($classNameParts, '.'), 0, -5);
+        $dottedNames = [];
+        foreach ($sniffFilePaths as $sniffFilePath) {
+            $sniffFilePathParts = explode(DIRECTORY_SEPARATOR, $sniffFilePath);
+            $sniffFilePathParts = array_slice($sniffFilePathParts, -4);
+            
+            unset($sniffFilePathParts[1]); // drop "/Sniffs" 
+            $sniffFilePathParts[3] = substr($sniffFilePathParts[3], 0, -9); // drop "Sniff.php"
+
+            $dottedName = implode($sniffFilePathParts, '.');
+
+            $dottedNames[$dottedName] = $sniffFilePath;
+        }
+
+        return $dottedNames;
     }
 }
