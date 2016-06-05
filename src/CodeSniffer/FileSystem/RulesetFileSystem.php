@@ -8,7 +8,6 @@
 namespace Symplify\MultiCodingStandard\CodeSniffer\FileSystem;
 
 use Exception;
-use Nette\Utils\Strings;
 use Symfony\Component\Finder\Finder;
 use Symplify\MultiCodingStandard\Contract\CodeSniffer\FileSystem\RulesetFileSystemInterface;
 
