@@ -2,7 +2,6 @@ services:
     # PHP_CodeSniffer helpers
     - Symplify\MultiCodingStandard\CodeSniffer\CodeSnifferFactory
     -
-        class: PHP_CodeSniffer
         factory: [@Symplify\MultiCodingStandard\CodeSniffer\CodeSnifferFactory, "create"]
     - Symplify\MultiCodingStandard\CodeSniffer\FileSystem\SniffFileSystem(%appDir%/../vendor)
     - Symplify\MultiCodingStandard\CodeSniffer\FileSystem\RulesetFileSystem(%appDir%/../vendor)
@@ -20,3 +19,8 @@ services:
     # configuration
     - Symplify\MultiCodingStandard\Configuration\Configuration
     - Symplify\MultiCodingStandard\Configuration\MultiCsFileLoader(%configPath%)
+
+    # PHP-CS-Fixer
+    - Symplify\MultiCodingStandard\PhpCsFixer\PhpCsFixerFactory
+    -
+       factory: [@Symplify\MultiCodingStandard\PhpCsFixer\PhpCsFixerFactory, "create"]

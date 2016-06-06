@@ -14,21 +14,6 @@ use Symplify\MultiCodingStandard\Contract\Configuration\MultiCsFileLoaderInterfa
 final class Configuration implements ConfigurationInterface
 {
     /**
-     * @var string
-     */
-    const STANDARDS = 'standards';
-
-    /**
-     * @var string
-     */
-    const SNIFFS = 'sniffs';
-    
-    /**
-     * @var string
-     */
-    const EXCLUDED_SNIFFS = 'exclude-sniffs';
-    
-    /**
      * @var MultiCsFileLoaderInterface
      */
     private $multiCsFileLoader;
@@ -54,10 +39,9 @@ final class Configuration implements ConfigurationInterface
      */
     public function getActiveSniffs()
     {
-        $this->ensureMultiJsFileIsLoaded();
-
-        if (isset($this->multiCsFile[self::SNIFFS])) {
-            return $this->sniffNaming->detectUnderscoreLowercaseFromSniffClassesOrNames($this->multiCsFile[self::SNIFFS]);
+        if (isset($this->getMultiCsFile()[self::SNIFFS])) {
+            $sniffs = $this->getMultiCsFile()[self::SNIFFS];
+            return $this->sniffNaming->detectUnderscoreLowercaseFromSniffClassesOrNames($sniffs);
         }
 
         return [];
@@ -68,10 +52,8 @@ final class Configuration implements ConfigurationInterface
      */
     public function getActiveStandards()
     {
-        $this->ensureMultiJsFileIsLoaded();
-
-        if (isset($this->multiCsFile[self::STANDARDS])) {
-            return $this->multiCsFile[self::STANDARDS];
+        if (isset($this->getMultiCsFile()[self::STANDARDS])) {
+            return $this->getMultiCsFile()[self::STANDARDS];
         }
 
         return [];
@@ -82,19 +64,60 @@ final class Configuration implements ConfigurationInterface
      */
     public function getExcludedSniffs()
     {
-        $this->ensureMultiJsFileIsLoaded();
-
-        if (isset($this->multiCsFile[self::EXCLUDED_SNIFFS])) {
-            return $this->multiCsFile[self::EXCLUDED_SNIFFS];
+        if (isset($this->getMultiCsFile()[self::EXCLUDED_SNIFFS])) {
+            return $this->getMultiCsFile()[self::EXCLUDED_SNIFFS];
         }
 
         return [];
     }
 
-    private function ensureMultiJsFileIsLoaded()
+    /**
+     * {@inheritdoc}
+     */
+    public function getActiveFixers()
     {
-        if ($this->multiCsFile === null) {
-            $this->multiCsFile = $this->multiCsFileLoader->load();
+        if (isset($this->getMultiCsFile()[self::FIXERS])) {
+            return $this->getMultiCsFile()[self::FIXERS];
         }
+
+        return [];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getExcludedFixers()
+    {
+        if (isset($this->getMultiCsFile()[self::EXCLUDED_FIXERS])) {
+            return $this->getMultiCsFile()[self::EXCLUDED_FIXERS];
+        }
+
+        return [];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getActiveFixerLevels()
+    {
+        if (isset($this->getMultiCsFile()[self::FIXER_LEVELS])) {
+            return $this->getMultiCsFile()[self::FIXER_LEVELS];
+        }
+
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    private function getMultiCsFile()
+    {
+        if ($this->multiCsFile) {
+            return $this->multiCsFile;
+        }
+
+        $this->multiCsFile = $this->multiCsFileLoader->load();
+
+        return $this->multiCsFile;
     }
 }

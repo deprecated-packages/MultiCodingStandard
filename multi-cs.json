@@ -4,5 +4,14 @@
     ],
     "sniffs": [
         "SymplifyCodingStandard\\Sniffs\\Naming\\AbstractClassNameSniff"
+    ],
+    "exclude-sniffs": [
+        "SymplifyCodingStandard\\Sniffs\\Naming\\AbstractClassNameSniff"
+    ],
+    "fixer-levels": [
+        "PSR-2"
+    ],
+    "fixer-exclude-fixers": [
+        "SomeFixer"
     ]
 }

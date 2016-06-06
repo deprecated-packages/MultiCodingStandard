@@ -23,7 +23,8 @@
         "nette/di": "^2.3",
         "nette/bootstrap": "^2.3",
         "tracy/tracy": "^2.3",
-        "squizlabs/php_codesniffer": "^2.6"
+        "squizlabs/php_codesniffer": "^2.6",
+        "fabpot/php-cs-fixer": "^1.11"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.3",

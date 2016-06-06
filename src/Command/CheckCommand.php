@@ -9,12 +9,15 @@ namespace Symplify\MultiCodingStandard\Command;
 
 use Exception;
 use PHP_CodeSniffer;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\StyleInterface;
 use Symfony\Component\Finder\Finder;
+use Symplify\MultiCodingStandard\Console\ExitCode;
 
-final class CheckCommand extends AbstractCommand
+final class CheckCommand extends Command
 {
     /**
      * @var PHP_CodeSniffer
@@ -40,6 +43,7 @@ final class CheckCommand extends AbstractCommand
     protected function configure()
     {
         $this->setName('check');
+        $this->addArgument('path', InputArgument::REQUIRED | InputArgument::IS_ARRAY, 'The path(s)', null);
         $this->setDescription('Check coding standard in particular directory');
     }
 
@@ -53,11 +57,11 @@ final class CheckCommand extends AbstractCommand
                 $this->checkDirectory($path);
             }
 
-            return self::EXIT_CODE_SUCCESS;
+            return ExitCode::SUCCESS;
         } catch (Exception $exception) {
             $this->style->error($exception->getMessage());
 
-            return self::EXIT_CODE_ERROR;
+            return ExitCode::ERROR;
         }
     }
 
@@ -66,8 +70,17 @@ final class CheckCommand extends AbstractCommand
      */
     private function checkDirectory($path)
     {
+        // code sniffer
         foreach ((new Finder())->in($path)->files() as $filePath => $fileInfo) {
             $file = $this->codeSniffer->processFile($filePath);
+
         }
+
+        // php-cs-fixer
+        
+
+        $this->style->success(
+            sprintf('Directory "%s" was checked!', $path)
+        );
     }
 }
