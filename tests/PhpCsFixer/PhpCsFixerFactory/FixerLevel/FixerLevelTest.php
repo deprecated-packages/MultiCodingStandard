@@ -5,13 +5,13 @@
  * Copyright (c) 2016 Tomas Votruba (http://tomasvotruba.cz).
  */
 
-namespace Symplify\MultiCodingStandard\Tests\PhpCsFixer;
+namespace Symplify\MultiCodingStandard\Tests\PhpCsFixer\PhpCsFixerFactory\FixerLevel;
 
 use phpunit\framework\TestCase;
 use Symfony\CS\Fixer;
 use Symplify\MultiCodingStandard\Tests\ContainerFactory;
 
-final class PhpCsFixerFactoryTest extends TestCase
+final class FixerLevelTest extends TestCase
 {
     /**
      * @var Fixer
@@ -20,7 +20,7 @@ final class PhpCsFixerFactoryTest extends TestCase
 
     protected function setUp()
     {
-        $container = (new ContainerFactory())->create();
+        $container = (new ContainerFactory())->createWithConfig(__DIR__.'/config/config.neon');
         $this->phpCsFixer = $container->getByType(Fixer::class);
     }
 

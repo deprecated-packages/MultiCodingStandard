@@ -9,9 +9,13 @@
         "SymplifyCodingStandard\\Sniffs\\Naming\\AbstractClassNameSniff"
     ],
     "fixer-levels": [
-        "PSR-2"
+        "psr1",
+        "psr2"
     ],
-    "fixer-exclude-fixers": [
-        "SomeFixer"
+    "fixers": [
+        "array_element_no_space_before_comma"
+    ],
+    "exclude-fixers": [
+        "braces"
     ]
 }

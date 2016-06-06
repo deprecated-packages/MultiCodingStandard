@@ -7,6 +7,7 @@
 
 namespace Symplify\MultiCodingStandard\Configuration;
 
+use Symfony\CS\FixerInterface;
 use Symplify\MultiCodingStandard\Contract\CodeSniffer\Naming\SniffNamingInterface;
 use Symplify\MultiCodingStandard\Contract\Configuration\ConfigurationInterface;
 use Symplify\MultiCodingStandard\Contract\Configuration\MultiCsFileLoaderInterface;
@@ -101,7 +102,10 @@ final class Configuration implements ConfigurationInterface
     public function getActiveFixerLevels()
     {
         if (isset($this->getMultiCsFile()[self::FIXER_LEVELS])) {
-            return $this->getMultiCsFile()[self::FIXER_LEVELS];
+            $fixerLevels = $this->getMultiCsFile()[self::FIXER_LEVELS];
+            $this->ensureLevelsAreValid($fixerLevels);
+
+            return $fixerLevels;
         }
 
         return [];
@@ -119,5 +123,31 @@ final class Configuration implements ConfigurationInterface
         $this->multiCsFile = $this->multiCsFileLoader->load();
 
         return $this->multiCsFile;
+    }
+
+    /**
+     * @return string[]
+     */
+    private function getFixerLevels()
+    {
+        return ['psr0', 'psr1', 'psr2', 'symfony'];
+    }
+
+    /**
+     * @throws \Exception
+     */
+    private function ensureLevelsAreValid(array $fixerLevels)
+    {
+        foreach ($fixerLevels as $fixerLevel) {
+            if (!in_array($fixerLevel, $this->getFixerLevels(), true)) {
+                throw new \Exception(
+                    sprintf(
+                        'Level "%s" is not supported. Available levels are: %s.',
+                        $fixerLevel,
+                        implode($this->getFixerLevels(), ', ')
+                    )
+                );
+            }
+        }
     }
 }
