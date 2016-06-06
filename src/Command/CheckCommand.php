@@ -9,24 +9,29 @@ namespace Symplify\MultiCodingStandard\Command;
 
 use Exception;
 use PHP_CodeSniffer;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\StyleInterface;
 use Symfony\Component\Finder\Finder;
 
-final class CheckCommand extends Command
+final class CheckCommand extends AbstractCommand
 {
     /**
      * @var PHP_CodeSniffer
      */
     private $codeSniffer;
 
-    public function __construct(PHP_CodeSniffer $codeSniffer)
+    /**
+     * @var StyleInterface
+     */
+    private $style;
+
+    public function __construct(PHP_CodeSniffer $codeSniffer, StyleInterface $style)
     {
         parent::__construct();
 
         $this->codeSniffer = $codeSniffer;
+        $this->style = $style;
     }
 
     /**
@@ -35,7 +40,6 @@ final class CheckCommand extends Command
     protected function configure()
     {
         $this->setName('check');
-        $this->addArgument('path', InputArgument::REQUIRED | InputArgument::IS_ARRAY, 'The path(s)', null);
         $this->setDescription('Check coding standard in particular directory');
     }
 
@@ -51,9 +55,7 @@ final class CheckCommand extends Command
 
             return 0;
         } catch (Exception $exception) {
-            $output->write(
-                sprintf('<error>%s</error>', $exception->getMessage())
-            );
+            $this->style->error($exception->getMessage());
 
             return 1;
         }

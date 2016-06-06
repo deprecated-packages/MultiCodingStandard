@@ -11,6 +11,11 @@ services:
     # console
     - Symplify\MultiCodingStandard\Console\Application
     - Symplify\MultiCodingStandard\Command\CheckCommand
+    - Symplify\MultiCodingStandard\Console\Style\StyleFactory
+    -
+        factory: [@Symplify\MultiCodingStandard\Console\Style\StyleFactory, "create"]
+    - Symfony\Component\Console\Input\ArgvInput
+    - Symfony\Component\Console\Output\ConsoleOutput
 
     # configuration
     - Symplify\MultiCodingStandard\Configuration\Configuration
