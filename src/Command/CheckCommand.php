@@ -53,11 +53,11 @@ final class CheckCommand extends AbstractCommand
                 $this->checkDirectory($path);
             }
 
-            return 0;
+            return self::EXIT_CODE_SUCCESS;
         } catch (Exception $exception) {
             $this->style->error($exception->getMessage());
 
-            return 1;
+            return self::EXIT_CODE_ERROR;
         }
     }
 
