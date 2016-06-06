@@ -4,5 +4,18 @@
     ],
     "sniffs": [
         "SymplifyCodingStandard\\Sniffs\\Naming\\AbstractClassNameSniff"
+    ],
+    "exclude-sniffs": [
+        "SymplifyCodingStandard\\Sniffs\\Naming\\AbstractClassNameSniff"
+    ],
+    "fixer-levels": [
+        "psr1",
+        "psr2"
+    ],
+    "fixers": [
+        "array_element_no_space_before_comma"
+    ],
+    "exclude-fixers": [
+        "braces"
     ]
 }

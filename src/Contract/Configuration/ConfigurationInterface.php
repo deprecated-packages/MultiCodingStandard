@@ -7,20 +7,7 @@
 
 namespace Symplify\MultiCodingStandard\Contract\Configuration;
 
-interface ConfigurationInterface
+interface ConfigurationInterface extends PhpCsFixerConfigurationInterface, PhpCodeSnifferConfigurationInterface
 {
-    /**
-     * @return string[]
-     */
-    public function getActiveSniffs();
 
-    /**
-     * @return string[]
-     */
-    public function getExcludedSniffs();
-
-    /**
-     * @return string[]
-     */
-    public function getActiveStandards();
 }

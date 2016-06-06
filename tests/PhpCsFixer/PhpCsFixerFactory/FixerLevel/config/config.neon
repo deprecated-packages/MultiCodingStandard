@@ -1,0 +1,6 @@
+extensions:
+    multiCs: Symplify\MultiCodingStandard\DI\MultiCodingStandardExtension
+
+
+multiCs:
+    configPath: %appDir%/PhpCsFixer/PhpCsFixerFactory/FixerLevel/multi-cs.json

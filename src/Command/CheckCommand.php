@@ -13,7 +13,9 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\StyleInterface;
 use Symfony\Component\Finder\Finder;
+use Symplify\MultiCodingStandard\Console\ExitCode;
 
 final class CheckCommand extends Command
 {
@@ -22,11 +24,17 @@ final class CheckCommand extends Command
      */
     private $codeSniffer;
 
-    public function __construct(PHP_CodeSniffer $codeSniffer)
+    /**
+     * @var StyleInterface
+     */
+    private $style;
+
+    public function __construct(PHP_CodeSniffer $codeSniffer, StyleInterface $style)
     {
         parent::__construct();
 
         $this->codeSniffer = $codeSniffer;
+        $this->style = $style;
     }
 
     /**
@@ -49,13 +57,11 @@ final class CheckCommand extends Command
                 $this->checkDirectory($path);
             }
 
-            return 0;
+            return ExitCode::SUCCESS;
         } catch (Exception $exception) {
-            $output->write(
-                sprintf('<error>%s</error>', $exception->getMessage())
-            );
+            $this->style->error($exception->getMessage());
 
-            return 1;
+            return ExitCode::ERROR;
         }
     }
 
@@ -64,8 +70,17 @@ final class CheckCommand extends Command
      */
     private function checkDirectory($path)
     {
+        // code sniffer
         foreach ((new Finder())->in($path)->files() as $filePath => $fileInfo) {
             $file = $this->codeSniffer->processFile($filePath);
+
         }
+
+        // php-cs-fixer
+        
+
+        $this->style->success(
+            sprintf('Directory "%s" was checked!', $path)
+        );
     }
 }
