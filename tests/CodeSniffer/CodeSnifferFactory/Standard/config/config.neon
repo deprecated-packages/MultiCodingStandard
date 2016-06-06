@@ -3,4 +3,4 @@ extensions:
 
 
 multiCs:
-    configPath: %appDir%/CodeSniffer/CodeSnifferFactoryStandard/multi-cs.json
+    configPath: %appDir%/CodeSniffer/CodeSnifferFactory/Standard/multi-cs.json

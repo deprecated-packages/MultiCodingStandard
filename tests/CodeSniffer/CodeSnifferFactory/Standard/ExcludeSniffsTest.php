@@ -1,6 +1,6 @@
 <?php
 
-namespace Symplify\MultiCodingStandard\Tests\CodeSniffer\CodeSnifferFactoryStandard;
+namespace Symplify\MultiCodingStandard\Tests\CodeSniffer\CodeSnifferFactory\Standard;
 
 use PHP_CodeSniffer;
 use phpunit\framework\TestCase;
