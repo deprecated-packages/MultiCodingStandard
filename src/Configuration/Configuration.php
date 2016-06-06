@@ -57,7 +57,7 @@ final class Configuration implements ConfigurationInterface
         $this->ensureMultiJsFileIsLoaded();
 
         if (isset($this->multiCsFile[self::SNIFFS])) {
-            return $this->normalizeSniffsFromClassesToUnderscoreLowercase($this->multiCsFile[self::SNIFFS]);
+            return $this->sniffNaming->detectUnderscoreLowercaseFromSniffClassesOrNames($this->multiCsFile[self::SNIFFS]);
         }
 
         return [];
@@ -89,14 +89,6 @@ final class Configuration implements ConfigurationInterface
         }
 
         return [];
-    }
-
-    /**
-     * @return string[]
-     */
-    private function normalizeSniffsFromClassesToUnderscoreLowercase(array $sniffs)
-    {
-        return $this->sniffNaming->detectUnderscoreLowercaseFromSniffClasses($sniffs);
     }
 
     private function ensureMultiJsFileIsLoaded()

@@ -21,7 +21,7 @@ final class SniffNamingTest extends TestCase
     public function testDetectUnderscoreLowercaseFromSniffClasses()
     {
         $sniffClasses = ['SomeStandard\\Sniff\\Group\\SpecificSniff'];
-        $names = $this->sniffNaming->detectUnderscoreLowercaseFromSniffClasses($sniffClasses);
+        $names = $this->sniffNaming->detectUnderscoreLowercaseFromSniffClassesOrNames($sniffClasses);
 
         $this->assertSame(['somestandard_sniff_group_specificsniff'], $names);
     }

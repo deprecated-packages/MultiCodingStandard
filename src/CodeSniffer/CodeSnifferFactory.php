@@ -59,6 +59,7 @@ final class CodeSnifferFactory implements CodeSnifferFactoryInterface
     public function create()
     {
         $this->codeSniffer = new PHP_CodeSniffer();
+
         $this->setupSniffs($this->configuration->getActiveSniffs());
         $this->setupStandards($this->configuration->getActiveStandards());
         $this->setupErrorRecoding();
