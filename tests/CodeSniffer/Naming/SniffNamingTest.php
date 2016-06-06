@@ -18,12 +18,15 @@ final class SniffNamingTest extends TestCase
         $this->sniffNaming = new SniffNaming();
     }
 
-    public function testDetectUnderscoreLowercaseFromSniffClasses()
+    public function testDetectUnderscoreLowercaseFromSniffClassesOrNames()
     {
-        $sniffClasses = ['SomeStandard\\Sniff\\Group\\SpecificSniff'];
-        $names = $this->sniffNaming->detectUnderscoreLowercaseFromSniffClassesOrNames($sniffClasses);
+        $names = $this->sniffNaming->detectUnderscoreLowercaseFromSniffClassesOrNames(['SomeStandard\\Sniffs\\Group\\SpecificSniff']);
+        $this->assertSame(['somestandard_sniffs_group_specificsniff'], $names);
 
-        $this->assertSame(['somestandard_sniff_group_specificsniff'], $names);
+        $newNames = $this->sniffNaming->detectUnderscoreLowercaseFromSniffClassesOrNames(['somestandard.group.specific']);
+        $this->assertSame(['somestandard_sniffs_group_specificsniff'], $newNames);
+
+        $this->assertSame($names, $newNames);
     }
 
     public function testDetectDottedFromFilePaths()
