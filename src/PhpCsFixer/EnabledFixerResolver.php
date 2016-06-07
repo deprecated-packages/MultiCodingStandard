@@ -11,7 +11,6 @@ use Symfony\CS\ConfigurationResolver;
 use Symfony\CS\Fixer;
 use Symfony\CS\FixerInterface;
 use Symplify\MultiCodingStandard\Contract\Configuration\PhpCsFixerConfigurationInterface;
-use Symplify\MultiCodingStandard\Contract\PhpCsFixer\FileSystem\FixerFileSystemInterface;
 
 final class EnabledFixerResolver
 {
@@ -21,16 +20,16 @@ final class EnabledFixerResolver
     private $configuration;
 
     /**
-     * @var FixerFileSystemInterface
+     * @var ConfigurationResolverFactory
      */
-    private $fixerFileSystem;
+    private $configurationResolverFactory;
 
     public function __construct(
         PhpCsFixerConfigurationInterface $configuration,
-        FixerFileSystemInterface $fixerFileSystem
+        ConfigurationResolverFactory $configurationResolverFactory
     ) {
         $this->configuration = $configuration;
-        $this->fixerFileSystem = $fixerFileSystem;
+        $this->configurationResolverFactory = $configurationResolverFactory;
     }
     
     /**
@@ -38,11 +37,7 @@ final class EnabledFixerResolver
      */
     public function getEnabledFixers()
     {
-        $allFixerFiles = $this->fixerFileSystem->findAllFixers();
-        $allFixerObjects = $this->createObjectsFromFixerFiles($allFixerFiles);
-
-        $configurationResolver = new ConfigurationResolver();
-        $configurationResolver->setAllFixers($allFixerObjects);
+        $configurationResolver = $this->configurationResolverFactory->create();
 
         // 2. filter fixers in by level
         $finalFixersToBeRegistered = [];
@@ -85,18 +80,4 @@ final class EnabledFixerResolver
         return $finalFixersToBeRegistered;
     }
 
-    /**
-     * @return object[]
-     */
-    private function createObjectsFromFixerFiles(array $fixerFiles)
-    {
-        $fixerObjects = [];
-        foreach ($fixerFiles as $file) {
-            $relativeNamespace = $file->getRelativePath();
-            $class = 'Symfony\\CS\\Fixer\\' . ($relativeNamespace ? $relativeNamespace . '\\' : '') . $file->getBasename('.php');
-            $fixerObjects[] = new $class;
-        }
-
-        return $fixerObjects;
-    }
 }
