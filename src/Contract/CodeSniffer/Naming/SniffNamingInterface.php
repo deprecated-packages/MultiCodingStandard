@@ -12,7 +12,7 @@ interface SniffNamingInterface
     /**
      * @return string[]
      */
-    public function detectUnderscoreLowercaseFromSniffClassesOrNames(array $sniffClasses);
+    public function detectUnderscoreLowercaseFromSniffNames(array $sniffClasses);
 
     /**
      * @return string[]

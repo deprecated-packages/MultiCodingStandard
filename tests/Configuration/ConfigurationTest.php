@@ -32,7 +32,7 @@ final class ConfigurationTest extends TestCase
 
     public function testGetExcludedSniffs()
     {
-        $this->assertSame(['SomeCodingStandard.Sniffs.Group.SpecificSniff'], $this->configuration->getExcludedSniffs());
+        $this->assertSame(['SomeCodingStandard.Group.Specific'], $this->configuration->getExcludedSniffs());
     }
 
     public function testEmpty()

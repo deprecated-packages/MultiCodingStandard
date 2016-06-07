@@ -1,5 +1,5 @@
 {
     "sniffs": [
-        "SymplifyCodingStandard\\Sniffs\\Naming\\AbstractClassNameSniff"
+        "SymplifyCodingStandard.Naming.AbstractClassName"
     ]
 }

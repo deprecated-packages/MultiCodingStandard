@@ -3,9 +3,9 @@
         "SomeStandard"
     ],
     "sniffs": [
-        "SomeCodingStandard\\Sniffs\\Group\\SpecificSniff"
+        "SomeCodingStandard.Group.Specific"
     ],
     "exclude-sniffs": [
-        "SomeCodingStandard.Sniffs.Group.SpecificSniff"
+        "SomeCodingStandard.Group.Specific"
     ]
 }
