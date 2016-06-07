@@ -87,7 +87,7 @@ final class EnabledFixerResolver
      */
     private function addCustomFixers(ConfigurationResolver $configurationResolver)
     {
-        $fixers = $this->getEnabledFixersAsAstring();
+        $fixers = $this->getEnabledFixersAsString();
 
         if ($fixers) {
             $currentConfigurationResolver = clone $configurationResolver;
@@ -102,7 +102,7 @@ final class EnabledFixerResolver
     /**
      * @return string
      */
-    private function getEnabledFixersAsAstring()
+    private function getEnabledFixersAsString()
     {
         $fixers = '';
         if (count($this->configuration->getActiveFixers())) {
