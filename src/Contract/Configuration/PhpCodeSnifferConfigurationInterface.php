@@ -24,7 +24,6 @@ interface PhpCodeSnifferConfigurationInterface
      */
     const EXCLUDED_SNIFFS = 'exclude-sniffs';
 
-
     /**
      * @return string[]
      */

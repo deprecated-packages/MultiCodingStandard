@@ -24,3 +24,5 @@ services:
     - Symplify\MultiCodingStandard\PhpCsFixer\PhpCsFixerFactory
     -
        factory: [@Symplify\MultiCodingStandard\PhpCsFixer\PhpCsFixerFactory, "create"]
+    - Symplify\MultiCodingStandard\PhpCsFixer\EnabledFixerResolver
+    - Symplify\MultiCodingStandard\PhpCsFixer\FileSystem\FixerFileSystem
