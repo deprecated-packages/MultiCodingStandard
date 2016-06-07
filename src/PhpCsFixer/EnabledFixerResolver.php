@@ -24,6 +24,11 @@ final class EnabledFixerResolver
      */
     private $configurationResolverFactory;
 
+    /**
+     * @var FixerInterface[]
+     */
+    private $enabledFixers = [];
+
     public function __construct(
         PhpCsFixerConfigurationInterface $configuration,
         ConfigurationResolverFactory $configurationResolverFactory
@@ -37,17 +42,21 @@ final class EnabledFixerResolver
      */
     public function getEnabledFixers()
     {
-        $configurationResolver = $this->configurationResolverFactory->create();
-
-        // 2. filter fixers in by level
-        $finalFixersToBeRegistered = [];
-
-        // filter out custom ones
-        $excludedFixers = '';
-        if (count($this->configuration->getExcludedFixers())) {
-            $excludedFixers .= '-'.implode(',-', $this->configuration->getExcludedFixers());
+        if ($this->enabledFixers !== []) {
+            return $this->enabledFixers;
         }
 
+        $configurationResolver = $this->configurationResolverFactory->create();
+
+        $this->addFixersByLevel($configurationResolver);
+        $this->addCustomFixers($configurationResolver);
+
+        return $this->enabledFixers;
+    }
+
+    private function addFixersByLevel(ConfigurationResolver $configurationResolver)
+    {
+        $excludedFixers = $this->getExcludedFixersAsString();
         foreach ($this->configuration->getActiveFixerLevels() as $level) {
             $currentConfigurationResolver = clone $configurationResolver;
             if ($excludedFixers) {
@@ -56,14 +65,29 @@ final class EnabledFixerResolver
             $currentConfigurationResolver->setOption('level', $level);
             $currentConfigurationResolver->resolve();
 
-            $finalFixersToBeRegistered += $currentConfigurationResolver->getFixers();
+            $this->enabledFixers = array_merge($this->enabledFixers, $currentConfigurationResolver->getFixers());
         }
+    }
 
-        // 3. filter in custom ones
-        $fixers = '';
-        if (count($this->configuration->getActiveFixers())) {
-            $fixers .= implode(',', $this->configuration->getActiveFixers());
+    /**
+     * @return string
+     */
+    private function getExcludedFixersAsString()
+    {
+        $excludedFixers = '';
+        if (count($this->configuration->getExcludedFixers())) {
+            $excludedFixers .= '-' . implode(',-', $this->configuration->getExcludedFixers());
+            return $excludedFixers;
         }
+        return $excludedFixers;
+    }
+
+    /**
+     * @return array
+     */
+    private function addCustomFixers(ConfigurationResolver $configurationResolver)
+    {
+        $fixers = $this->getEnabledFixersAsAstring();
 
         if ($fixers) {
             $currentConfigurationResolver = clone $configurationResolver;
@@ -71,13 +95,20 @@ final class EnabledFixerResolver
             $currentConfigurationResolver->setOption('fixers', $fixers);
             $currentConfigurationResolver->resolve();
 
-            $finalFixersToBeRegistered = array_merge(
-                $finalFixersToBeRegistered,
-                $currentConfigurationResolver->getFixers()
-            );
+            $this->enabledFixers = array_merge($this->enabledFixers, $currentConfigurationResolver->getFixers());
         }
-        
-        return $finalFixersToBeRegistered;
     }
 
+    /**
+     * @return string
+     */
+    private function getEnabledFixersAsAstring()
+    {
+        $fixers = '';
+        if (count($this->configuration->getActiveFixers())) {
+            $fixers .= implode(',', $this->configuration->getActiveFixers());
+            return $fixers;
+        }
+        return $fixers;
+    }
 }
