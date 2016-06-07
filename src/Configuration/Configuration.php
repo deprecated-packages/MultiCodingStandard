@@ -42,7 +42,7 @@ final class Configuration implements ConfigurationInterface
     {
         if (isset($this->getMultiCsFile()[self::SNIFFS])) {
             $sniffs = $this->getMultiCsFile()[self::SNIFFS];
-            return $this->sniffNaming->detectUnderscoreLowercaseFromSniffClassesOrNames($sniffs);
+            return $this->sniffNaming->detectUnderscoreLowercaseFromSniffNames($sniffs);
         }
 
         return [];

@@ -7,7 +7,6 @@
 
 namespace Symplify\MultiCodingStandard\CodeSniffer\Naming;
 
-use Nette\Utils\Strings;
 use Symplify\MultiCodingStandard\Contract\CodeSniffer\Naming\SniffNamingInterface;
 
 final class SniffNaming implements SniffNamingInterface
@@ -15,18 +14,14 @@ final class SniffNaming implements SniffNamingInterface
     /**
      * {@inheritdoc}
      */
-    public function detectUnderscoreLowercaseFromSniffClassesOrNames(array $sniffClassesOrNames)
+    public function detectUnderscoreLowercaseFromSniffNames(array $sniffClassesOrNames)
     {
         $underscoreLowercaseNames = [];
         foreach ($sniffClassesOrNames as $sniffClassOrName) {
-            if (Strings::contains($sniffClassOrName, '.')) {
-                $sniffNameParts = explode('.', $sniffClassOrName);
-                array_splice($sniffNameParts, 1, 0, ['Sniffs']);
-                $sniffNameParts[3] .= 'Sniff';
-                $underscoreName = implode('_', $sniffNameParts);
-            } else {
-                $underscoreName = str_replace(['\\'], ['_'], $sniffClassOrName);
-            }
+            $sniffNameParts = explode('.', $sniffClassOrName);
+            array_splice($sniffNameParts, 1, 0, ['Sniffs']);
+            $sniffNameParts[3] .= 'Sniff';
+            $underscoreName = implode('_', $sniffNameParts);
 
             $underscoreLowercaseNames[] = strtolower($underscoreName);
         }

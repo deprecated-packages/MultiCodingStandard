@@ -1,5 +1,0 @@
-{
-    "sniffs": [
-        "SymplifyCodingStandard.Naming.AbstractClassName"
-    ]
-}
