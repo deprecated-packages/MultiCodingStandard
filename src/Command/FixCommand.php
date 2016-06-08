@@ -8,32 +8,48 @@
 namespace Symplify\MultiCodingStandard\Command;
 
 use Exception;
-use PHP_CodeSniffer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\StyleInterface;
 use Symfony\Component\Finder\Finder;
+use Symfony\CS\Fixer;
+use Symplify\MultiCodingStandard\CodeSniffer\CodeBeautifier;
+use Symplify\MultiCodingStandard\CodeSniffer\CodeBeautifierFactory;
 use Symplify\MultiCodingStandard\Console\ExitCode;
 
-final class CheckCommand extends Command
+final class FixCommand extends Command
 {
     /**
-     * @var PHP_CodeSniffer
+     * @var CodeBeautifierFactory
      */
-    private $codeSniffer;
+    private $codeBeautifierFactory;
 
     /**
      * @var StyleInterface
      */
     private $style;
 
-    public function __construct(PHP_CodeSniffer $codeSniffer, StyleInterface $style)
-    {
+    /**
+     * @var Fixer
+     */
+    private $fixer;
+
+    /**
+     * @var CodeBeautifier
+     */
+    private $codeBeautifier;
+
+    public function __construct(
+        CodeBeautifierFactory $codeBeautifierFactory,
+        Fixer $fixer,
+        StyleInterface $style
+    ) {
         parent::__construct();
 
-        $this->codeSniffer = $codeSniffer;
+        $this->codeBeautifierFactory = $codeBeautifierFactory;
+        $this->fixer = $fixer;
         $this->style = $style;
     }
 
@@ -42,9 +58,9 @@ final class CheckCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('check');
+        $this->setName('fix');
         $this->addArgument('path', InputArgument::REQUIRED | InputArgument::IS_ARRAY, 'The path(s)', null);
-        $this->setDescription('Check coding standard in one or more directories.');
+        $this->setDescription('Fix coding standard in one or more directories.');
     }
 
     /**
@@ -52,9 +68,14 @@ final class CheckCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        // note: needs to be lazy created, due to constant-options in PHP_CodeSniffer
+        $this->codeBeautifier = $this->codeBeautifierFactory->create();
+        var_dump($this->codeBeautifier);
+        die;
+
         try {
             foreach ($input->getArgument('path') as $path) {
-                $this->checkDirectory($path);
+                $this->fixDirectory($path);
             }
 
             return ExitCode::SUCCESS;
@@ -68,12 +89,12 @@ final class CheckCommand extends Command
     /**
      * @param string $path
      */
-    private function checkDirectory($path)
+    private function fixDirectory($path)
     {
         // code sniffer
-        foreach ((new Finder())->in($path)->files() as $filePath => $fileInfo) {
+        foreach (Finder::create()->in($path)->files() as $filePath => $fileInfo) {
             $file = $this->codeSniffer->processFile($filePath);
-
+            var_dump($file->getErrorCount());
         }
 
         // php-cs-fixer

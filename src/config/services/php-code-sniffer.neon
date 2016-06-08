@@ -1,0 +1,8 @@
+services:
+    - Symplify\MultiCodingStandard\CodeSniffer\CodeSnifferFactory
+    -
+        factory: [@Symplify\MultiCodingStandard\CodeSniffer\CodeSnifferFactory, "create"]
+    - Symplify\MultiCodingStandard\CodeSniffer\CodeBeautifierFactory
+    - Symplify\MultiCodingStandard\CodeSniffer\FileSystem\SniffFileSystem(%appDir%/../vendor)
+    - Symplify\MultiCodingStandard\CodeSniffer\FileSystem\RulesetFileSystem(%appDir%/../vendor)
+    - Symplify\MultiCodingStandard\CodeSniffer\Naming\SniffNaming
