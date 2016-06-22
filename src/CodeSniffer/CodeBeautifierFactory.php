@@ -7,9 +7,10 @@
 
 namespace Symplify\MultiCodingStandard\CodeSniffer;
 
+use Symplify\MultiCodingStandard\Contract\CodeSniffer\CodeBeautifierFactoryInterface;
 use Symplify\MultiCodingStandard\Contract\CodeSniffer\CodeSnifferFactoryInterface;
 
-final class CodeBeautifierFactory
+final class CodeBeautifierFactory implements CodeBeautifierFactoryInterface
 {
     /**
      * @var CodeSnifferFactoryInterface
@@ -26,9 +27,16 @@ final class CodeBeautifierFactory
      */
     public function create()
     {
+        // high verbosity
+        if (!defined('PHP_CODESNIFFER_VERBOSITY')) {
+            define('PHP_CODESNIFFER_VERBOSITY', 1);
+        }
+
+        // enables fixer
         if (!defined('PHP_CODESNIFFER_CBF')) {
             define('PHP_CODESNIFFER_CBF', true);
         }
+
         return $this->codeSnifferFactory->create();
     }
 }

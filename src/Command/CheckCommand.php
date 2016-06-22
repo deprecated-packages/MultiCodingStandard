@@ -16,6 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\StyleInterface;
 use Symfony\Component\Finder\Finder;
 use Symplify\MultiCodingStandard\Console\ExitCode;
+use Symplify\MultiCodingStandard\Contract\CodeSniffer\CodeSnifferFactoryInterface;
 
 final class CheckCommand extends Command
 {
@@ -29,11 +30,18 @@ final class CheckCommand extends Command
      */
     private $style;
 
-    public function __construct(PHP_CodeSniffer $codeSniffer, StyleInterface $style)
-    {
+    /**
+     * @var CodeSnifferFactoryInterface
+     */
+    private $codeSnifferFactory;
+
+    public function __construct(
+        CodeSnifferFactoryInterface $codeSnifferFactory,
+        StyleInterface $style
+    ) {
         parent::__construct();
 
-        $this->codeSniffer = $codeSniffer;
+        $this->codeSnifferFactory = $codeSnifferFactory;
         $this->style = $style;
     }
 
@@ -72,7 +80,7 @@ final class CheckCommand extends Command
     {
         // code sniffer
         foreach ((new Finder())->in($path)->files() as $filePath => $fileInfo) {
-            $file = $this->codeSniffer->processFile($filePath);
+            $file = $this->getCodeSniffer()->processFile($filePath);
 
         }
 
@@ -82,5 +90,22 @@ final class CheckCommand extends Command
         $this->style->success(
             sprintf('Directory "%s" was checked!', $path)
         );
+    }
+
+    /**
+     * Lazy loaded due to duplicated constants in setup
+     * in CodeSniffer for both Sniffer and Fixer.
+     *
+     * @return PHP_CodeSniffer
+     */
+    private function getCodeSniffer()
+    {
+        if ($this->codeSniffer) {
+            return $this->codeSniffer;
+        }
+
+        $this->codeSniffer = $this->codeSnifferFactory->create();
+
+        return $this->codeSniffer;
     }
 }

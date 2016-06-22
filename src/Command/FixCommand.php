@@ -18,11 +18,12 @@ use Symfony\CS\Fixer;
 use Symplify\MultiCodingStandard\CodeSniffer\CodeBeautifier;
 use Symplify\MultiCodingStandard\CodeSniffer\CodeBeautifierFactory;
 use Symplify\MultiCodingStandard\Console\ExitCode;
+use Symplify\MultiCodingStandard\Contract\CodeSniffer\CodeBeautifierFactoryInterface;
 
 final class FixCommand extends Command
 {
     /**
-     * @var CodeBeautifierFactory
+     * @var CodeBeautifierFactoryInterface
      */
     private $codeBeautifierFactory;
 
@@ -42,7 +43,7 @@ final class FixCommand extends Command
     private $codeBeautifier;
 
     public function __construct(
-        CodeBeautifierFactory $codeBeautifierFactory,
+        CodeBeautifierFactoryInterface $codeBeautifierFactory,
         Fixer $fixer,
         StyleInterface $style
     ) {
@@ -70,8 +71,6 @@ final class FixCommand extends Command
     {
         // note: needs to be lazy created, due to constant-options in PHP_CodeSniffer
         $this->codeBeautifier = $this->codeBeautifierFactory->create();
-        var_dump($this->codeBeautifier);
-        die;
 
         try {
             foreach ($input->getArgument('path') as $path) {
@@ -93,12 +92,11 @@ final class FixCommand extends Command
     {
         // code sniffer
         foreach (Finder::create()->in($path)->files() as $filePath => $fileInfo) {
-            $file = $this->codeSniffer->processFile($filePath);
+            $file = $this->codeBeautifier->processFile($filePath);
             var_dump($file->getErrorCount());
         }
 
         // php-cs-fixer
-        
 
         $this->style->success(
             sprintf('Directory "%s" was checked!', $path)
