@@ -8,6 +8,7 @@
 namespace Symplify\MultiCodingStandard\DI;
 
 use Nette\DI\CompilerExtension;
+use Nette\DI\Helpers;
 use Nette\DI\ServiceDefinition;
 use Symfony\Component\Console\Command\Command;
 use Symplify\MultiCodingStandard\Console\Application;
@@ -26,9 +27,7 @@ final class MultiCodingStandardExtension extends CompilerExtension
      */
     public function loadConfiguration()
     {
-        $config = $this->validateConfig($this->defaults);
-        $this->getContainerBuilder()->parameters += $config;
-
+        $this->setConfigToContainerBuilder($this->defaults);
         $this->loadServicesFromConfig();
     }
 
@@ -68,5 +67,15 @@ final class MultiCodingStandardExtension extends CompilerExtension
         $definitionName = $containerBuilder->getByType($type);
 
         return $containerBuilder->getDefinition($definitionName);
+    }
+
+    /**
+     * @param string[] $defaults
+     */
+    private function setConfigToContainerBuilder(array $defaults)
+    {
+        $config = $this->validateConfig($this->defaults);
+        $config['configPath'] = Helpers::expand($config['configPath'], $this->getContainerBuilder()->parameters);
+        $this->getContainerBuilder()->parameters += $config;
     }
 }

@@ -81,12 +81,9 @@ final class CheckCommand extends Command
         // code sniffer
         foreach ((new Finder())->in($path)->files() as $filePath => $fileInfo) {
             $file = $this->getCodeSniffer()->processFile($filePath);
-
         }
 
         // php-cs-fixer
-        
-
         $this->style->success(
             sprintf('Directory "%s" was checked!', $path)
         );

@@ -16,9 +16,9 @@ use Symfony\Component\Console\Style\StyleInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\CS\Fixer;
 use Symplify\MultiCodingStandard\CodeSniffer\CodeBeautifier;
-use Symplify\MultiCodingStandard\CodeSniffer\CodeBeautifierFactory;
 use Symplify\MultiCodingStandard\Console\ExitCode;
 use Symplify\MultiCodingStandard\Contract\CodeSniffer\CodeBeautifierFactoryInterface;
+use Symplify\MultiCodingStandard\PhpCsFixer\PhpCsFixerFactory;
 
 final class FixCommand extends Command
 {
@@ -33,24 +33,24 @@ final class FixCommand extends Command
     private $style;
 
     /**
-     * @var Fixer
-     */
-    private $fixer;
-
-    /**
      * @var CodeBeautifier
      */
     private $codeBeautifier;
 
+    /**
+     * @var PhpCsFixerFactory
+     */
+    private $phpCsFixerFactory;
+
     public function __construct(
         CodeBeautifierFactoryInterface $codeBeautifierFactory,
-        Fixer $fixer,
+        PhpCsFixerFactory $phpCsFixerFactory,
         StyleInterface $style
     ) {
         parent::__construct();
 
         $this->codeBeautifierFactory = $codeBeautifierFactory;
-        $this->fixer = $fixer;
+        $this->phpCsFixerFactory = $phpCsFixerFactory;
         $this->style = $style;
     }
 

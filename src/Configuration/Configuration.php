@@ -126,15 +126,7 @@ final class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @return string[]
-     */
-    private function getFixerLevels()
-    {
-        return ['psr0', 'psr1', 'psr2', 'symfony'];
-    }
-
-    /**
-     * @throws \Exception
+     * @param string[] $fixerLevels
      */
     private function ensureLevelsAreValid(array $fixerLevels)
     {
@@ -149,5 +141,13 @@ final class Configuration implements ConfigurationInterface
                 );
             }
         }
+    }
+
+    /**
+     * @return string[]
+     */
+    private function getFixerLevels()
+    {
+        return ['psr0', 'psr1', 'psr2', 'symfony'];
     }
 }
