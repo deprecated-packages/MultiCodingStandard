@@ -30,5 +30,6 @@
         "phpunit/phpunit": "^5.3",
         "nette/utils": "^2.3",
         "symplify/coding-standard": "^0.2.0"
-    }
+    },
+    "bin": ["bin/multi-cs"]
 }
