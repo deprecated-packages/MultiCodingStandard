@@ -36,6 +36,7 @@ final class FixCommand extends Command
      * @var CodeBeautifier
      */
     private $codeBeautifier;
+
     /**
      * @var PhpCsFixerFactory
      */
