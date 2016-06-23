@@ -6,14 +6,12 @@
  */
 
 // 1. Create temp dir
-$tempDir = sys_get_temp_dir() . '/_apigen';
-if (function_exists("posix_getuid")) {
+$tempDir = sys_get_temp_dir() . '/_multi-cs';
+if (function_exists('posix_getuid')) {
 	$tempDir .= posix_getuid();
 }
-$fileSystem = new Nette\Utils\FileSystem();
-$fileSystem->delete($tempDir);
-$fileSystem->createDir($tempDir);
-
+Nette\Utils\FileSystem::delete($tempDir);
+Nette\Utils\FileSystem::createDir($tempDir);
 
 // 2. Create container
 $configurator = new Nette\Configurator();
