@@ -15,4 +15,7 @@ composer require symplify/multi-coding-standard
 
 ## Usage
 
-...
+```sh
+vendor/bin/multi-cs check [directory]
+vendor/bin/multi-cs check src
+```
