@@ -54,7 +54,7 @@ final class CodeSnifferFactory implements CodeSnifferFactoryInterface
     }
 
     /**
-     * @return PHP_CodeSniffer
+     * {@inheritdoc}
      */
     public function create()
     {

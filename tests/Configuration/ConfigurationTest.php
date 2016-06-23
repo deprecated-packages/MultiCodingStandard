@@ -2,7 +2,7 @@
 
 namespace Symplify\MultiCodingStandard\Tests\Configuration;
 
-use phpunit\framework\TestCase;
+use PHPUnit\Framework\TestCase;
 use Symplify\MultiCodingStandard\CodeSniffer\Naming\SniffNaming;
 use Symplify\MultiCodingStandard\Configuration\Configuration;
 use Symplify\MultiCodingStandard\Configuration\MultiCsFileLoader;
