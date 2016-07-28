@@ -90,16 +90,22 @@ final class FixCommand extends Command
      */
     private function fixDirectory($path)
     {
+        $fixedCount = 0;
         // code sniffer
         foreach (Finder::create()->in($path)->files() as $filePath => $fileInfo) {
             $file = $this->codeBeautifier->processFile($filePath);
-            var_dump($file->getErrorCount());
+            $fixedCount += $file->getFixableCount();
         }
 
-        // php-cs-fixer
-
         $this->style->success(
-            sprintf('Directory "%s" was checked!', $path)
+            sprintf(
+                'Directory "%s" was fixed! %d fixes were applied.',
+                $path,
+                $fixedCount
+            )
         );
+
+        // php-cs-fixer
+        // todo!
     }
 }

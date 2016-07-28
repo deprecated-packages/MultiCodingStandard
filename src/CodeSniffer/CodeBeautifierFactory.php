@@ -29,7 +29,7 @@ final class CodeBeautifierFactory implements CodeBeautifierFactoryInterface
     {
         // high verbosity
         if (!defined('PHP_CODESNIFFER_VERBOSITY')) {
-            define('PHP_CODESNIFFER_VERBOSITY', 1);
+            define('PHP_CODESNIFFER_VERBOSITY', 2);
         }
 
         // enables fixer
@@ -37,6 +37,27 @@ final class CodeBeautifierFactory implements CodeBeautifierFactoryInterface
             define('PHP_CODESNIFFER_CBF', true);
         }
 
-        return $this->codeSnifferFactory->create();
+        $codeSnifferCli = new \PHP_CodeSniffer_CLI();
+//        $codeSnifferCli->runphpcbf();
+
+        $cliValues = $codeSnifferCli->getDefaults();
+        $cliValues['verbosity']    = 0;
+        $cliValues['showProgress'] = false;
+        $cliValues['generator']    = '';
+        $cliValues['explain']      = false;
+        $cliValues['interactive']  = false;
+        $cliValues['showSources']  = false;
+        $cliValues['reportFile']   = null;
+        $cliValues['reports']      = array();
+
+        $diffFile = getcwd().'/phpcbf-fixed.diff';
+        $cliValues['reports'] = array('diff' => $diffFile);
+        $codeSnifferCli->setCommandLineValues($cliValues);
+
+
+        $codeSniffer = $this->codeSnifferFactory->create(true);
+        $codeSniffer->setCli($codeSnifferCli);
+
+        return $codeSniffer;
     }
 }

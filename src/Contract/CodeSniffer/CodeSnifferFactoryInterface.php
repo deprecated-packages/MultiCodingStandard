@@ -12,7 +12,8 @@ use PHP_CodeSniffer;
 interface CodeSnifferFactoryInterface
 {
     /**
+     * @param bool $useBeautifier
      * @return PHP_CodeSniffer
      */
-    public function create();
+    public function create($useBeautifier = false);
 }

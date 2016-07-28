@@ -56,9 +56,13 @@ final class CodeSnifferFactory implements CodeSnifferFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function create()
+    public function create($useBeautifier = false)
     {
-        $this->codeSniffer = new PHP_CodeSniffer();
+        if ($useBeautifier) {
+            $this->codeSniffer = new CodeBeautifier;
+        } else {
+            $this->codeSniffer = new PHP_CodeSniffer();
+        }
 
         $this->setupSniffs($this->configuration->getActiveSniffs());
         $this->setupStandards($this->configuration->getActiveStandards());
