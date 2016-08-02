@@ -1,7 +1,7 @@
 services:
-    - Symplify\MultiCodingStandard\Console\Application
-    - Symplify\MultiCodingStandard\Command\CheckCommand
-    - Symplify\MultiCodingStandard\Command\FixCommand
+    - Symplify\MultiCodingStandard\Console\MultiCodingStandardApplication
+    - Symplify\MultiCodingStandard\Command\RunCommand
+
     - Symplify\MultiCodingStandard\Console\Style\StyleFactory
     -
         factory: [@Symplify\MultiCodingStandard\Console\Style\StyleFactory, "create"]

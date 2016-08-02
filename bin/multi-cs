@@ -8,9 +8,12 @@
 
 require_once __DIR__.'/bootstrap.php';
 
-/** @var Nette\DI\Container $container */
-$container = require_once __DIR__.'/di-container.php';
+$containerFactory = new \Symplify\MultiCodingStandard\DI\ContainerFactory();
+$container = $containerFactory->create();
 
-/** @var Symplify\MultiCodingStandard\Console\Application $application */
-$application = $container->getByType(Symplify\MultiCodingStandard\Console\Application::class);
+
+/** @var Symplify\MultiCodingStandard\Console\MultiCodingStandardApplication $application */
+$application = $container->getByType(Symplify\MultiCodingStandard\Console\MultiCodingStandardApplication::class);
+$application->setDefaultCommand('run', true);
 $application->run();
+

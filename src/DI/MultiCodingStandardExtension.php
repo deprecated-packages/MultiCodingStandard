@@ -11,10 +11,15 @@ use Nette\DI\CompilerExtension;
 use Nette\DI\Helpers;
 use Nette\DI\ServiceDefinition;
 use Symfony\Component\Console\Command\Command;
-use Symplify\MultiCodingStandard\Console\Application;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symplify\MultiCodingStandard\Console\MultiCodingStandardApplication;
+use Symplify\PHP7_CodeSniffer\DI\ExtensionHelperTrait;
 
 final class MultiCodingStandardExtension extends CompilerExtension
 {
+    use ExtensionHelperTrait;
+
     /**
      * @var string[]
      */
@@ -37,6 +42,7 @@ final class MultiCodingStandardExtension extends CompilerExtension
     public function beforeCompile()
     {
         $this->loadCommandsToConsoleApplication();
+        $this->loadEventSubscribersToEventDispatcher();
     }
 
     private function loadServicesFromConfig()
@@ -48,33 +54,21 @@ final class MultiCodingStandardExtension extends CompilerExtension
 
     private function loadCommandsToConsoleApplication()
     {
-        $consoleApplication = $this->getDefinitionByType(Application::class);
-
-        $containerBuilder = $this->getContainerBuilder();
-        foreach ($containerBuilder->findByType(Command::class) as $definition) {
-            $consoleApplication->addSetup('add', ['@'.$definition->getClass()]);
-        }
+        $this->addServicesToCollector(MultiCodingStandardApplication::class, Command::class, 'add');
     }
 
-    /**
-     * @param string $type
-     *
-     * @return ServiceDefinition
-     */
-    private function getDefinitionByType($type)
+    private function loadEventSubscribersToEventDispatcher()
     {
-        $containerBuilder = $this->getContainerBuilder();
-        $definitionName = $containerBuilder->getByType($type);
-
-        return $containerBuilder->getDefinition($definitionName);
+        $this->addServicesToCollector(EventDispatcherInterface::class, EventSubscriberInterface::class, 'addSubscriber');
     }
+
 
     /**
      * @param string[] $defaults
      */
     private function setConfigToContainerBuilder(array $defaults)
     {
-        $config = $this->validateConfig($this->defaults);
+        $config = $this->validateConfig($defaults);
         $config['configPath'] = Helpers::expand($config['configPath'], $this->getContainerBuilder()->parameters);
         $this->getContainerBuilder()->parameters += $config;
     }

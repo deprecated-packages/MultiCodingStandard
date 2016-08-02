@@ -1,6 +1,7 @@
 includes:
     - services/console.neon
     - services/php-code-sniffer.neon
+    - services/php7-code-sniffer.neon
     - services/php-cs-fixer.neon
 
 services:

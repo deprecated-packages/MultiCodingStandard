@@ -1,4 +1,4 @@
-# Use multiple coding standards with zero-knowledge of PHP_CodeSniffer
+# Use multiple coding standards with zero-knowledge of PHP_CodeSniffer nor PHP-CS-Fixer
 
 [![Build Status](https://img.shields.io/travis/Symplify/MultiCodingStandard.svg?style=flat-square)](https://travis-ci.org/Symplify/MultiCodingStandard)
 [![Quality Score](https://img.shields.io/scrutinizer/g/Symplify/MultiCodingStandard.svg?style=flat-square)](https://scrutinizer-ci.com/g/Symplify/MultiCodingStandard)
@@ -10,12 +10,11 @@
 ## Install
 
 ```sh
-composer require symplify/multi-coding-standard
+composer require symplify/multi-coding-standard --dev
 ```
 
 ## Usage
 
 ```sh
-vendor/bin/multi-cs check [directory]
-vendor/bin/multi-cs check src
+vendor/bin/multi-cs src
 ```

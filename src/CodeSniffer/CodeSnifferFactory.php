@@ -8,13 +8,13 @@
 namespace Symplify\MultiCodingStandard\CodeSniffer;
 
 use PHP_CodeSniffer;
-use Symplify\MultiCodingStandard\Contract\CodeSniffer\CodeSnifferFactoryInterface;
 use Symplify\MultiCodingStandard\Contract\CodeSniffer\FileSystem\RulesetFileSystemInterface;
 use Symplify\MultiCodingStandard\Contract\CodeSniffer\FileSystem\SniffFileSystemInterface;
 use Symplify\MultiCodingStandard\Contract\CodeSniffer\Naming\SniffNamingInterface;
 use Symplify\MultiCodingStandard\Contract\Configuration\ConfigurationInterface;
+use Symplify\PHP7_CodeSniffer\Php7CodeSniffer;
 
-final class CodeSnifferFactory implements CodeSnifferFactoryInterface
+final class CodeSnifferFactory
 {
     /**
      * @var ConfigurationInterface
@@ -37,7 +37,7 @@ final class CodeSnifferFactory implements CodeSnifferFactoryInterface
     private $sniffNaming;
 
     /**
-     * @var PHP_CodeSniffer
+     * @var Php7CodeSniffer
      */
     private $codeSniffer;
 
@@ -56,17 +56,14 @@ final class CodeSnifferFactory implements CodeSnifferFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function create($useBeautifier = false)
+    public function create()
     {
-        if ($useBeautifier) {
-            $this->codeSniffer = new CodeBeautifier;
-        } else {
-            $this->codeSniffer = new PHP_CodeSniffer();
-        }
+//        $this->codeSniffer = new Php7CodeSniffer();
+//        dump($codeSniffer);
+//        die;
 
         $this->setupSniffs($this->configuration->getActiveSniffs());
         $this->setupStandards($this->configuration->getActiveStandards());
-        $this->setupErrorRecoding();
 
         return $this->codeSniffer;
     }
@@ -85,13 +82,6 @@ final class CodeSnifferFactory implements CodeSnifferFactoryInterface
             $sniffFilePaths = $this->removeExcludedSniffs($sniffFilePaths);
             $this->codeSniffer->registerSniffs($sniffFilePaths, []);
         }
-    }
-
-    private function setupErrorRecoding()
-    {
-        $this->codeSniffer->cli->setCommandLineValues([
-            '-s', // showSources must be on, so that errors are recorded
-        ]);
     }
 
     /**
