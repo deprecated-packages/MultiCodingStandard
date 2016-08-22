@@ -2,14 +2,13 @@
 
 namespace Symplify\MultiCodingStandard\Tests\Configuration;
 
-use phpunit\framework\TestCase;
+use PHPUnit\Framework\TestCase;
 use Symplify\MultiCodingStandard\Configuration\MultiCsFileLoader;
-use Symplify\MultiCodingStandard\Contract\Configuration\MultiCsFileLoaderInterface;
 
 final class MultiCsFileLoaderTest extends TestCase
 {
     /**
-     * @var MultiCsFileLoaderInterface
+     * @var MultiCsFileLoader
      */
     private $multiCsFileLoader;
 

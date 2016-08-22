@@ -39,11 +39,9 @@ final class Application
             $this->createPhp7CodeSnifferRunApplicationCommand($command)
         );
 
-        $this->php7CodeSnifferApplication->runCommand(
-            $this->createPhp7CodeSnifferRunApplicationCommand($command)
+        $this->phpCsFixerApplication->runCommand(
+            $this->createPhpCsFixerRunApplicationCommand($command)
         );
-
-        // todo FixerApplication
     }
 
     private function createPhp7CodeSnifferRunApplicationCommand(RunApplicationCommand $command) : Php7CodeSnifferRunApplicationCommand

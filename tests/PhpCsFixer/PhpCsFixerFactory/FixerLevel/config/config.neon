@@ -1,5 +1,6 @@
 extensions:
     multiCs: Symplify\MultiCodingStandard\DI\MultiCodingStandardExtension
+    - Symplify\PHP7_CodeSniffer\DI\Php7CodeSnifferExtension
 
 
 multiCs:
