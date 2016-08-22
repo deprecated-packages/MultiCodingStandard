@@ -11,10 +11,17 @@ use Symplify\MultiCodingStandard\PhpCsFixer\Application\Command\RunApplicationCo
 
 final class Application
 {
+    public function __construct()
+    {
+
+    }
+
     public function runCommand(RunApplicationCommand $command)
     {
         // resolve configuration
         dump($command);
+
+
         die;
     }
 }

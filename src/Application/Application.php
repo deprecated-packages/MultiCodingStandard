@@ -8,6 +8,7 @@
 namespace Symplify\MultiCodingStandard\Application;
 
 use Symplify\MultiCodingStandard\Application\Command\RunApplicationCommand;
+use Symplify\MultiCodingStandard\CodeSniffer\Legacy\Version2ClassAliases;
 use Symplify\MultiCodingStandard\PhpCsFixer\Application\Application as PhpCsFixerApplication;
 use Symplify\MultiCodingStandard\PhpCsFixer\Application\Command\RunApplicationCommand as PhpCsFixerRunApplicationCommand;
 use Symplify\PHP7_CodeSniffer\Application\Application as Php7CodeSnifferApplication;
@@ -31,6 +32,8 @@ final class Application
     ) {
         $this->php7CodeSnifferApplication = $php7CodeSnifferApplication;
         $this->phpCsFixerApplication = $phpCsFixerApplication;
+
+        Version2ClassAliases::register();
     }
 
     public function runCommand(RunApplicationCommand $command)
