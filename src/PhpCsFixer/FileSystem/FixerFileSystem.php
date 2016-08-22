@@ -10,14 +10,13 @@ namespace Symplify\MultiCodingStandard\PhpCsFixer\FileSystem;
 use ReflectionClass;
 use Symfony\Component\Finder\Finder;
 use Symfony\CS\Fixer;
-use Symplify\MultiCodingStandard\Contract\PhpCsFixer\FileSystem\FixerFileSystemInterface;
 
-final class FixerFileSystem implements FixerFileSystemInterface
+final class FixerFileSystem
 {
     /**
-     * {@inheritdoc}
+     * @return string[]
      */
-    public function findAllFixers()
+    public function findAllFixers() : array
     {
         $phpCsFixerReflection = new ReflectionClass(Fixer::class);
         $directoryWithFixers = dirname($phpCsFixerReflection->getFileName()) . '/Fixer';

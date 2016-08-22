@@ -15,7 +15,7 @@ final class FixerFactory
      * @param string[] $files
      * @return FixerInterface[]
      */
-    public function createFixersFromFiles(array $files)
+    public function createFixersFromFiles(array $files) : array
     {
         $fixers = [];
         foreach ($files as $file) {

@@ -1,9 +1,6 @@
 services:
-    - Symplify\MultiCodingStandard\Console\MultiCodingStandardApplication
-    - Symplify\MultiCodingStandard\Command\RunCommand
-
+    - Symplify\MultiCodingStandard\Console\ConsoleApplication
+    - Symplify\MultiCodingStandard\Console\Command\RunCommand
     - Symplify\MultiCodingStandard\Console\Style\StyleFactory
     -
         factory: [@Symplify\MultiCodingStandard\Console\Style\StyleFactory, "create"]
-    - Symfony\Component\Console\Input\ArgvInput
-    - Symfony\Component\Console\Output\ConsoleOutput

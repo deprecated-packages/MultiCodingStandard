@@ -3,7 +3,6 @@
 namespace Symplify\MultiCodingStandard\Tests\Configuration;
 
 use PHPUnit\Framework\TestCase;
-use Symplify\MultiCodingStandard\CodeSniffer\Naming\SniffNaming;
 use Symplify\MultiCodingStandard\Configuration\Configuration;
 use Symplify\MultiCodingStandard\Configuration\MultiCsFileLoader;
 use Symplify\MultiCodingStandard\Contract\Configuration\ConfigurationInterface;
@@ -22,7 +21,7 @@ final class ConfigurationTest extends TestCase
 
     public function testGetActiveSniffs()
     {
-        $this->assertSame(['somecodingstandard_sniffs_group_specificsniff'], $this->configuration->getActiveSniffs());
+        $this->assertSame(['SomeCodingStandard.Group.Specific'], $this->configuration->getActiveSniffs());
     }
 
     public function testGetActiveStandards()
@@ -44,15 +43,10 @@ final class ConfigurationTest extends TestCase
         $this->assertSame([], $configuration->getActiveStandards());
     }
 
-    /**
-     * @param string $config
-     * @return Configuration
-     */
-    private function createConfigurationWithConfig($config)
+    private function createConfigurationWithConfig(string $config) : Configuration
     {
         return new Configuration(
-            new MultiCsFileLoader($config),
-            new SniffNaming()
+            new MultiCsFileLoader($config)
         );
     }
 }

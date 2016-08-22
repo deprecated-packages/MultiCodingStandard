@@ -1,10 +1,11 @@
 services:
-    - Symplify\MultiCodingStandard\PhpCsFixer\PhpCsFixerFactory
-    -
-       factory: [@Symplify\MultiCodingStandard\PhpCsFixer\PhpCsFixerFactory, "create"]
-    - Symplify\MultiCodingStandard\PhpCsFixer\EnabledFixerResolver
+    - Symfony\CS\Fixer
     - Symplify\MultiCodingStandard\PhpCsFixer\FileSystem\FixerFileSystem
     - Symplify\MultiCodingStandard\PhpCsFixer\Fixer\FixerFactory
-    - Symplify\MultiCodingStandard\PhpCsFixer\ConfigurationResolverFactory
-    -
-        factory: [@Symplify\MultiCodingStandard\PhpCsFixer\ConfigurationResolverFactory, "create"]
+
+    # application
+    - Symplify\MultiCodingStandard\PhpCsFixer\Application\Application
+
+    # configuration
+    - Symplify\MultiCodingStandard\PhpCsFixer\Configuration\ConfigurationResolver
+    - Symplify\MultiCodingStandard\PhpCsFixer\Configuration\EnabledFixerResolver

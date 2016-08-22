@@ -1,19 +1,18 @@
 #!/usr/bin/env php
 <?php
 
-/*
- * This file is part of Symplify
- * Copyright (c) 2016 Tomas Votruba (http://tomasvotruba.cz).
- */
-
 require_once __DIR__.'/bootstrap.php';
 
-$containerFactory = new \Symplify\MultiCodingStandard\DI\ContainerFactory();
+Symplify\PHP7_CodeSniffer\Legacy\ClassAliases::registerAliases();
+
+// 1. build DI container
+$containerFactory = new Symplify\MultiCodingStandard\DI\ContainerFactory();
 $container = $containerFactory->create();
 
+// 2. get Console Application
+/** @var Symplify\MultiCodingStandard\Console\ConsoleApplication $application */
+$application = $container->getByType(Symplify\MultiCodingStandard\Console\ConsoleApplication::class);
 
-/** @var Symplify\MultiCodingStandard\Console\MultiCodingStandardApplication $application */
-$application = $container->getByType(Symplify\MultiCodingStandard\Console\MultiCodingStandardApplication::class);
+// 3. run it!
 $application->setDefaultCommand('run', true);
 $application->run();
-

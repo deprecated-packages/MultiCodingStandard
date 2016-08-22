@@ -9,22 +9,14 @@ namespace Symplify\MultiCodingStandard\DI;
 
 use Nette\DI\CompilerExtension;
 use Nette\DI\Helpers;
-use Nette\DI\ServiceDefinition;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symplify\MultiCodingStandard\Console\MultiCodingStandardApplication;
-use Symplify\PHP7_CodeSniffer\DI\ExtensionHelperTrait;
 
 final class MultiCodingStandardExtension extends CompilerExtension
 {
-    use ExtensionHelperTrait;
-
     /**
      * @var string[]
      */
     private $defaults = [
-        'configPath' => '%appDir%/../multi-cs.json'
+        'configPath' => '%appDir%/../../multi-cs.json'
     ];
 
     /**
@@ -33,35 +25,8 @@ final class MultiCodingStandardExtension extends CompilerExtension
     public function loadConfiguration()
     {
         $this->setConfigToContainerBuilder($this->defaults);
-        $this->loadServicesFromConfig();
+        $this->loadServicesFromConfigPath(__DIR__ . '/../config/services.neon');
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function beforeCompile()
-    {
-        $this->loadCommandsToConsoleApplication();
-        $this->loadEventSubscribersToEventDispatcher();
-    }
-
-    private function loadServicesFromConfig()
-    {
-        $containerBuilder = $this->getContainerBuilder();
-        $config = $this->loadFromFile(__DIR__.'/../config/services.neon');
-        $this->compiler->parseServices($containerBuilder, $config);
-    }
-
-    private function loadCommandsToConsoleApplication()
-    {
-        $this->addServicesToCollector(MultiCodingStandardApplication::class, Command::class, 'add');
-    }
-
-    private function loadEventSubscribersToEventDispatcher()
-    {
-        $this->addServicesToCollector(EventDispatcherInterface::class, EventSubscriberInterface::class, 'addSubscriber');
-    }
-
 
     /**
      * @param string[] $defaults
@@ -71,5 +36,12 @@ final class MultiCodingStandardExtension extends CompilerExtension
         $config = $this->validateConfig($defaults);
         $config['configPath'] = Helpers::expand($config['configPath'], $this->getContainerBuilder()->parameters);
         $this->getContainerBuilder()->parameters += $config;
+    }
+
+    private function loadServicesFromConfigPath(string $configPath)
+    {
+        $containerBuilder = $this->getContainerBuilder();
+        $config = $this->loadFromFile($configPath);
+        $this->compiler->parseServices($containerBuilder, $config);
     }
 }

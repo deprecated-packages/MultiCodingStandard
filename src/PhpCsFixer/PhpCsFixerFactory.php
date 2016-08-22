@@ -8,7 +8,6 @@
 namespace Symplify\MultiCodingStandard\PhpCsFixer;
 
 use Symfony\CS\Fixer;
-use Symfony\CS\FixerInterface;
 
 final class PhpCsFixerFactory
 {
@@ -22,10 +21,7 @@ final class PhpCsFixerFactory
         $this->enabledFixerResolver = $enabledFixerResolver;
     }
     
-    /**
-     * @return Fixer
-     */
-    public function create()
+    public function create() : Fixer
     {
         $phpCsFixer = new Fixer();
         $phpCsFixer->registerCustomFixers(

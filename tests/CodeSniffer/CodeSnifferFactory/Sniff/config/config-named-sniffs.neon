@@ -1,5 +1,0 @@
-extensions:
-    multiCs: Symplify\MultiCodingStandard\DI\MultiCodingStandardExtension
-
-multiCs:
-    configPath: %appDir%/CodeSniffer/CodeSnifferFactory/Sniff/multi-cs.json
