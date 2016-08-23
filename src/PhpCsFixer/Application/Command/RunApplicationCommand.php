@@ -63,7 +63,7 @@ final class RunApplicationCommand
         return $this->excludeFixers;
     }
 
-    public function isIsFixer(): bool
+    public function isFixer(): bool
     {
         return $this->isFixer;
     }

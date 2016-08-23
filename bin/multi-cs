@@ -3,8 +3,6 @@
 
 require_once __DIR__.'/bootstrap.php';
 
-Symplify\PHP7_CodeSniffer\Legacy\ClassAliases::registerAliases();
-
 // 1. build DI container
 $containerFactory = new Symplify\MultiCodingStandard\DI\ContainerFactory();
 $container = $containerFactory->create();

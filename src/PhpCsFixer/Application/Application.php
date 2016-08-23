@@ -7,21 +7,36 @@
 
 namespace Symplify\MultiCodingStandard\PhpCsFixer\Application;
 
+use Symfony\CS\Fixer;
 use Symplify\MultiCodingStandard\PhpCsFixer\Application\Command\RunApplicationCommand;
+use Symplify\MultiCodingStandard\PhpCsFixer\Factory\FixerSetFactory;
 
 final class Application
 {
-    public function __construct()
-    {
+    /**
+     * @var Fixer
+     */
+    private $fixer;
 
+    /**
+     * @var FixerSetFactory
+     */
+    private $fixerSetFactory;
+
+    public function __construct(Fixer $fixer, FixerSetFactory $fixerSetFactory)
+    {
+        $this->fixer = $fixer;
+        $this->fixerSetFactory = $fixerSetFactory;
     }
 
     public function runCommand(RunApplicationCommand $command)
     {
-        // resolve configuration
-        dump($command);
+        $fixers = $this->fixerSetFactory->createFromLevelsFixersAndExcludedFixers(
+            $command->getFixerLevels(),
+            $command->getFixers(),
+            $command->getExcludeFixers()
+        );
 
-
-        die;
+        $this->fixer->registerCustomFixers($fixers);
     }
 }
