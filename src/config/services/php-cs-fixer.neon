@@ -5,9 +5,6 @@ services:
     -
         factory: [@Symplify\MultiCodingStandard\PhpCsFixer\Configuration\ConfigurationResolverFactory, "create"]
 
-    - Symplify\MultiCodingStandard\PhpCsFixer\FileSystem\FixerFileSystem
-    - Symplify\MultiCodingStandard\PhpCsFixer\Fixer\FixerFactory
-
     # application
     - Symplify\MultiCodingStandard\PhpCsFixer\Factory\FixerResolver
     - Symplify\MultiCodingStandard\PhpCsFixer\Factory\FixerSetFactory
