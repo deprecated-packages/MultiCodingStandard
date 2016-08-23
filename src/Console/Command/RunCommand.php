@@ -15,6 +15,7 @@ use Symfony\Component\Console\Style\StyleInterface;
 use Symplify\MultiCodingStandard\Application\Application;
 use Symplify\MultiCodingStandard\Application\Command\RunApplicationCommand;
 use Symplify\MultiCodingStandard\Configuration\MultiCsFileLoader;
+use Symplify\MultiCodingStandard\Report\ErrorDataCollector;
 use Symplify\PHP7_CodeSniffer\Console\ExitCode;
 use Throwable;
 
@@ -35,13 +36,23 @@ final class RunCommand extends Command
      */
     private $multiCsFileLoader;
 
-    public function __construct(Application $application, StyleInterface $style, MultiCsFileLoader $multiCsFileLoader)
-    {
+    /**
+     * @var ErrorDataCollector
+     */
+    private $errorDataCollector;
+
+    public function __construct(
+        Application $application,
+        StyleInterface $style,
+        MultiCsFileLoader $multiCsFileLoader,
+        ErrorDataCollector $errorDataCollector
+    ) {
         parent::__construct();
 
         $this->application = $application;
         $this->style = $style;
         $this->multiCsFileLoader = $multiCsFileLoader;
+        $this->errorDataCollector = $errorDataCollector;
     }
 
     /**
@@ -64,6 +75,8 @@ final class RunCommand extends Command
             $this->application->runCommand(
                 $this->createRunApplicationCommandFromInput($input)
             );
+
+            dump($this->errorDataCollector->getErrorCount());
 
             $this->style->success(
                 sprintf(

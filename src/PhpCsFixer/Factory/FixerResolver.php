@@ -32,10 +32,8 @@ final class FixerResolver
             $currentConfigurationResolver = clone $this->configurationResolver;
 
             $excludedFixersAsString = $this->turnExcludedFixersToString($excludedFixers);
-            if ($excludedFixersAsString) {
-                $currentConfigurationResolver->setOption('fixers', $excludedFixersAsString);
-            }
             $currentConfigurationResolver->setOption('level', $fixerLevel);
+            $currentConfigurationResolver->setOption('fixers', $excludedFixersAsString);
             $currentConfigurationResolver->resolve();
 
             $fixers = array_merge($fixers, $currentConfigurationResolver->getFixers());
@@ -60,19 +58,22 @@ final class FixerResolver
         return $currentConfigurationResolver->getFixers();
     }
 
-    private function turnExcludedFixersToString(array $excludedFixers) : string
-    {
-        if (count($excludedFixers)) {
-            return '-' . implode(',-', $excludedFixers);
-        }
-        return '';
-    }
-
     private function turnFixersToString(array $fixers) : string
     {
-        if (count($fixers)) {
-            return implode(',', $fixers);
+        return $this->implodeWithPresign($fixers);
+    }
+
+    private function turnExcludedFixersToString(array $excludedFixers) : string
+    {
+        return $this->implodeWithPresign($excludedFixers, '-');
+    }
+
+    private function implodeWithPresign(array $items, string $presign = '')
+    {
+        if (count($items)) {
+            return $presign . implode(',' . $presign, $items);
         }
         return '';
+
     }
 }

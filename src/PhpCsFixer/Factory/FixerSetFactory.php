@@ -7,7 +7,9 @@
 
 namespace Symplify\MultiCodingStandard\PhpCsFixer\Factory;
 
+use Symfony\CS\Fixer;
 use Symfony\CS\FixerInterface;
+use Symplify\PHP7_CodeSniffer\Configuration\ConfigurationResolver;
 
 final class FixerSetFactory
 {
@@ -29,6 +31,8 @@ final class FixerSetFactory
         $fixersFromLevels = $this->fixerResolver->resolveFixersByLevelAndExcludedFixers($fixerLevels, $excludedFixers);
         $standaloneFixers = $this->fixerResolver->resolveFixers($fixers);
 
-        return array_merge($fixersFromLevels, $standaloneFixers);
+        $allFixers = array_merge($fixersFromLevels, $standaloneFixers);
+        dump(count($allFixers));
+        die;
     }
 }

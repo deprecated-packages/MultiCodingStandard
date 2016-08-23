@@ -1,0 +1,2 @@
+services:
+    - Symplify\MultiCodingStandard\Report\ErrorDataCollector
