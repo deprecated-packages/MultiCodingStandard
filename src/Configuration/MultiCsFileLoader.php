@@ -8,28 +8,21 @@
 namespace Symplify\MultiCodingStandard\Configuration;
 
 use Nette\Utils\Json;
-use Symplify\MultiCodingStandard\Contract\Configuration\MultiCsFileLoaderInterface;
 use Symplify\MultiCodingStandard\Exception\Configuration\MultiCsFileNotFoundException;
 
-final class MultiCsFileLoader implements MultiCsFileLoaderInterface
+final class MultiCsFileLoader
 {
     /**
      * @var string
      */
     private $multiCsJsonFile;
 
-    /**
-     * @param string $multiCsJsonFile
-     */
-    public function __construct($multiCsJsonFile)
+    public function __construct(string $multiCsJsonFile)
     {
         $this->multiCsJsonFile = $multiCsJsonFile;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function load()
+    public function load() : array
     {
         $this->ensureFileExists($this->multiCsJsonFile);
         
@@ -37,15 +30,13 @@ final class MultiCsFileLoader implements MultiCsFileLoaderInterface
         return Json::decode($fileContent, true);
     }
 
-    /**
-     * @param string $multiCsJsonFile
-     */
-    private function ensureFileExists($multiCsJsonFile)
+    private function ensureFileExists(string $multiCsJsonFile)
     {
         if (!file_exists($multiCsJsonFile)) {
             throw new MultiCsFileNotFoundException(
                 sprintf(
-                    'File "multi-cs.json" was not found in "%s". Did you forget to create it?',
+                    'File "%s" was not found in "%s". Did you forget to create it?',
+                    'multi-cs.json',
                     realpath(dirname($multiCsJsonFile)).'/'.basename($multiCsJsonFile)
                 )
             );

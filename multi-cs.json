@@ -2,12 +2,6 @@
     "standards": [
         "PSR2"
     ],
-    "sniffs": [
-        "SymplifyCodingStandard.Naming.AbstractClassName"
-    ],
-    "exclude-sniffs": [
-        "SymplifyCodingStandard.Naming.AbstractClassName"
-    ],
     "fixer-levels": [
         "psr1",
         "psr2"

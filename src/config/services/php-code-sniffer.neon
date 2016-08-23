@@ -1,6 +1,0 @@
-services:
-    - Symplify\MultiCodingStandard\CodeSniffer\CodeSnifferFactory
-    - Symplify\MultiCodingStandard\CodeSniffer\CodeBeautifierFactory
-    - Symplify\MultiCodingStandard\CodeSniffer\FileSystem\SniffFileSystem(%appDir%/../vendor)
-    - Symplify\MultiCodingStandard\CodeSniffer\FileSystem\RulesetFileSystem(%appDir%/../vendor)
-    - Symplify\MultiCodingStandard\CodeSniffer\Naming\SniffNaming

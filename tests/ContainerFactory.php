@@ -7,18 +7,12 @@ use Nette\DI\Container;
 
 final class ContainerFactory
 {
-    /**
-     * @return Container
-     */
-    public function create()
+    public function create() : Container
     {
         return $this->createWithConfig(__DIR__.'/../src/config/config.neon');
     }
 
-    /**
-     * @return Container
-     */
-    public function createWithConfig($config)
+    public function createWithConfig($config) : Container
     {
         $configurator = new Configurator();
         $configurator->setTempDirectory(TEMP_DIR);

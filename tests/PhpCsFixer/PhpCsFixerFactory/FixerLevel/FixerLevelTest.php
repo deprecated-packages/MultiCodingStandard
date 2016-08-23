@@ -7,7 +7,7 @@
 
 namespace Symplify\MultiCodingStandard\Tests\PhpCsFixer\PhpCsFixerFactory\FixerLevel;
 
-use phpunit\framework\TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\CS\Fixer;
 use Symplify\MultiCodingStandard\Tests\ContainerFactory;
 
