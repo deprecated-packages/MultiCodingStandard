@@ -8,8 +8,9 @@
 namespace Symplify\MultiCodingStandard\PhpCsFixer\Factory;
 
 use Symfony\CS\ConfigurationResolver;
+use Symfony\CS\FixerInterface;
 
-final class FixerResolver
+final class FixerFactory
 {
     /**
      * @var ConfigurationResolver
@@ -21,7 +22,18 @@ final class FixerResolver
         $this->configurationResolver = $configurationResolver;
     }
 
-    public function resolveFixersByLevelAndExcludedFixers(array $fixerLevels, array $excludedFixers) : array
+    /**
+     * @return FixerInterface[]
+     */
+    public function createFromLevelsFixersAndExcludedFixers(array $fixerLevels, array $fixers, array $excludedFixers) : array
+    {
+        $fixersFromLevels = $this->createFromLevelsAndExcludedFixers($fixerLevels, $excludedFixers);
+        $standaloneFixers = $this->createFromFixers($fixers);
+
+        return array_merge($fixersFromLevels, $standaloneFixers);
+    }
+
+    private function createFromLevelsAndExcludedFixers(array $fixerLevels, array $excludedFixers) : array
     {
         if (!count($fixerLevels)) {
             return [];
@@ -29,29 +41,29 @@ final class FixerResolver
 
         $fixers = [];
         foreach ($fixerLevels as $fixerLevel) {
-            $currentConfigurationResolver = clone $this->configurationResolver;
-
             $excludedFixersAsString = $this->turnExcludedFixersToString($excludedFixers);
-            $currentConfigurationResolver->setOption('level', $fixerLevel);
-            $currentConfigurationResolver->setOption('fixers', $excludedFixersAsString);
-            $currentConfigurationResolver->resolve();
+            $newFixers = $this->resolveFixersForLevelsAndFixers($fixerLevel, $excludedFixersAsString);
 
-            $fixers = array_merge($fixers, $currentConfigurationResolver->getFixers());
+            $fixers = array_merge($fixers, $newFixers);
         }
 
         return $fixers;
     }
 
-    public function resolveFixers(array $fixers) : array
+    private function createFromFixers(array $fixers) : array
     {
         if (!count($fixers)) {
             return [];
         }
 
         $fixersAsString = $this->turnFixersToString($fixers);
+        return $this->resolveFixersForLevelsAndFixers('none', $fixersAsString);
+    }
 
+    private function resolveFixersForLevelsAndFixers(string $level, string $fixersAsString) : array
+    {
         $currentConfigurationResolver = clone $this->configurationResolver;
-        $currentConfigurationResolver->setOption('level', 'none');
+        $currentConfigurationResolver->setOption('level', $level);
         $currentConfigurationResolver->setOption('fixers', $fixersAsString);
         $currentConfigurationResolver->resolve();
 
@@ -74,6 +86,5 @@ final class FixerResolver
             return $presign . implode(',' . $presign, $items);
         }
         return '';
-
     }
 }

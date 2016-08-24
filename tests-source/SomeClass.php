@@ -4,10 +4,7 @@ class
     SomeClass
 {
 
-    public function hi()
-    {
-
-
-            }
-
+        public function hi()
+        {
+    }
 }

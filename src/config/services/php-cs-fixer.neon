@@ -6,6 +6,7 @@ services:
         factory: [@Symplify\MultiCodingStandard\PhpCsFixer\Configuration\ConfigurationResolverFactory, "create"]
 
     # application
-    - Symplify\MultiCodingStandard\PhpCsFixer\Factory\FixerResolver
-    - Symplify\MultiCodingStandard\PhpCsFixer\Factory\FixerSetFactory
+    - Symplify\MultiCodingStandard\PhpCsFixer\Factory\FixerFactory
     - Symplify\MultiCodingStandard\PhpCsFixer\Application\Application
+
+    - Symplify\MultiCodingStandard\PhpCsFixer\Report\DiffDataCollector
