@@ -15,7 +15,7 @@ use Symfony\Component\Console\Style\StyleInterface;
 use Symplify\MultiCodingStandard\Application\Application;
 use Symplify\MultiCodingStandard\Application\Command\RunApplicationCommand;
 use Symplify\MultiCodingStandard\Configuration\MultiCsFileLoader;
-use Symplify\MultiCodingStandard\Report\ErrorDataCollector;
+use Symplify\MultiCodingStandard\Console\Output\InfoMessagePrinter;
 use Symplify\PHP7_CodeSniffer\Console\ExitCode;
 use Throwable;
 
@@ -37,22 +37,22 @@ final class RunCommand extends Command
     private $multiCsFileLoader;
 
     /**
-     * @var ErrorDataCollector
+     * @var InfoMessagePrinter
      */
-    private $errorDataCollector;
+    private $infoMessagePrinter;
 
     public function __construct(
         Application $application,
         StyleInterface $style,
         MultiCsFileLoader $multiCsFileLoader,
-        ErrorDataCollector $errorDataCollector
+        InfoMessagePrinter $infoMessagePrinter
     ) {
         parent::__construct();
 
         $this->application = $application;
         $this->style = $style;
         $this->multiCsFileLoader = $multiCsFileLoader;
-        $this->errorDataCollector = $errorDataCollector;
+        $this->infoMessagePrinter = $infoMessagePrinter;
     }
 
     /**
@@ -76,7 +76,18 @@ final class RunCommand extends Command
                 $this->createRunApplicationCommandFromInput($input)
             );
 
-            dump($this->errorDataCollector->getErrorCount());
+            if ($this->infoMessagePrinter->hasSomeErrorMessages()) {
+                $this->infoMessagePrinter->printFoundErrorsStatus($input->getOption('fix'));
+
+//                $this->style->error(
+//                    sprintf(
+//                        'We found some errors in "%s".',
+//                        implode(',', $input->getArgument('source'))
+//                    )
+//                );
+
+                return ExitCode::ERROR;
+            }
 
             $this->style->success(
                 sprintf(
@@ -87,7 +98,9 @@ final class RunCommand extends Command
 
             return ExitCode::SUCCESS;
         } catch (Throwable $throwable) {
-            $this->style->error($throwable->getMessage());
+            if ($throwable->getMessage()) {
+                $this->style->error($throwable->getMessage());
+            }
 
             return ExitCode::ERROR;
         }

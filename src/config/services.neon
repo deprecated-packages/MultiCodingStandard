@@ -3,4 +3,3 @@ includes:
     - services/configuration.neon
     - services/console.neon
     - services/php-cs-fixer.neon
-    - services/report.neon
