@@ -79,13 +79,6 @@ final class RunCommand extends Command
             if ($this->infoMessagePrinter->hasSomeErrorMessages()) {
                 $this->infoMessagePrinter->printFoundErrorsStatus($input->getOption('fix'));
 
-//                $this->style->error(
-//                    sprintf(
-//                        'We found some errors in "%s".',
-//                        implode(',', $input->getArgument('source'))
-//                    )
-//                );
-
                 return ExitCode::ERROR;
             }
 
