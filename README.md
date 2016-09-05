@@ -22,7 +22,7 @@ Add to `composer.json`:
 }
 ```
 
-Then updat:
+Then update:
 
 ```sh
 composer update
