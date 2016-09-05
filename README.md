@@ -10,8 +10,22 @@
 
 ## Install
 
+Add to `composer.json`:
+
+```json
+{
+    "require-dev": {
+        "symplify/multi-coding-standard": "~1.0",
+        "symfony/console": "3.2.x-dev as 3.1",
+        "squizlabs/php_codesniffer": "3.0.x-dev as 2.6"
+    }
+}
+```
+
+Then updat:
+
 ```sh
-composer require symplify/multi-coding-standard --dev
+composer update
 ```
 
 ## Usage
