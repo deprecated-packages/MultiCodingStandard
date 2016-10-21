@@ -1,2 +1,2 @@
 services:
-    - Symplify\MultiCodingStandard\Configuration\MultiCsFileLoader(%configPath%)
+    - Symplify\MultiCodingStandard\Configuration\MultiCsFileLoader
