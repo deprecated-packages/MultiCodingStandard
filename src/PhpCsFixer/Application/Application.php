@@ -59,7 +59,9 @@ final class Application
 
     private function registerFixersToFixer(array $fixerLevels, array $fixers, array $excludedFixers)
     {
-        $fixers = $this->fixerSetFactory->createFromLevelsFixersAndExcludedFixers($fixerLevels, $fixers, $excludedFixers);
+        $fixers = $this->fixerSetFactory->createFromLevelsFixersAndExcludedFixers(
+            $fixerLevels, $fixers, $excludedFixers
+        );
 
         $this->fixer->registerCustomFixers($fixers);
     }

@@ -27,8 +27,9 @@ final class MultiCsFileLoader
     public function load() : array
     {
         $this->ensureFileExists($this->multiCsJsonFile);
-        
+
         $fileContent = file_get_contents($this->multiCsJsonFile);
+
         return Json::decode($fileContent, true);
     }
 

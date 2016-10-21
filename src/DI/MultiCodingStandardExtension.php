@@ -19,15 +19,15 @@ final class MultiCodingStandardExtension extends CompilerExtension
      */
     private $defaults = [
         'configPathsToCheck' => [
-            '%appDir%/../../../../multi-cs.json', # installed as dependency
-            '%appDir%/../../multi-cs.json', # cloned package
-        ]
+            '%appDir%/../../../../multi-cs.json', // installed as dependency
+            '%appDir%/../../multi-cs.json', // cloned package
+        ],
     ];
 
     public function loadConfiguration()
     {
         $this->setConfigToContainerBuilder($this->defaults);
-        $this->loadServicesFromConfigPath(__DIR__ . '/../config/services.neon');
+        $this->loadServicesFromConfigPath(__DIR__.'/../config/services.neon');
     }
 
     /**

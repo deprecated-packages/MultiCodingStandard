@@ -11,7 +11,8 @@ namespace Symplify\MultiCodingStandard\Application;
 
 use Symplify\MultiCodingStandard\Application\Command\RunApplicationCommand;
 use Symplify\MultiCodingStandard\PhpCsFixer\Application\Application as PhpCsFixerApplication;
-use Symplify\MultiCodingStandard\PhpCsFixer\Application\Command\RunApplicationCommand as PhpCsFixerRunApplicationCommand;
+use Symplify\MultiCodingStandard\PhpCsFixer\Application\Command\RunApplicationCommand
+    as PhpCsFixerRunApplicationCommand;
 use Symplify\PHP7_CodeSniffer\Application\Application as Php7CodeSnifferApplication;
 use Symplify\PHP7_CodeSniffer\Application\Command\RunApplicationCommand as Php7CodeSnifferRunApplicationCommand;
 
@@ -46,7 +47,10 @@ final class Application
         );
     }
 
-    private function createPhp7CodeSnifferRunApplicationCommand(RunApplicationCommand $command) : Php7CodeSnifferRunApplicationCommand
+    /**
+     * @return Php7CodeSnifferRunApplicationCommand
+     */
+    private function createPhp7CodeSnifferRunApplicationCommand(RunApplicationCommand $command)
     {
         return new Php7CodeSnifferRunApplicationCommand(
             $command->getSource(),
@@ -57,7 +61,10 @@ final class Application
         );
     }
 
-    private function createPhpCsFixerRunApplicationCommand(RunApplicationCommand $command) : PhpCsFixerRunApplicationCommand
+    /**
+     * @return PhpCsFixerRunApplicationCommand
+     */
+    private function createPhpCsFixerRunApplicationCommand(RunApplicationCommand $command)
     {
         return new PhpCsFixerRunApplicationCommand(
             $command->getSource(),

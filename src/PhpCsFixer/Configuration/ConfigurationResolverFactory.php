@@ -19,6 +19,7 @@ final class ConfigurationResolverFactory
     {
         $configurationResolver = new ConfigurationResolver();
         $configurationResolver->setAllFixers($this->getAllFixers());
+
         return $configurationResolver;
     }
 
@@ -29,6 +30,7 @@ final class ConfigurationResolverFactory
     {
         $fixer = new Fixer();
         $fixer->registerBuiltInFixers();
+
         return $fixer->getFixers();
     }
 }

@@ -13,5 +13,4 @@ use Exception;
 
 final class MultiCsFileNotFoundException extends Exception
 {
-
 }

@@ -33,7 +33,7 @@ final class ConsoleApplication extends Application
     {
         return new InputDefinition([
             new InputArgument('command', InputArgument::REQUIRED, 'The command to execute'),
-            new InputOption('--help', '-h', InputOption::VALUE_NONE, 'Display this help message')
+            new InputOption('--help', '-h', InputOption::VALUE_NONE, 'Display this help message'),
         ]);
     }
 }

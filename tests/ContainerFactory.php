@@ -6,6 +6,7 @@ namespace Symplify\MultiCodingStandard\Tests;
 
 use Nette\Configurator;
 use Nette\DI\Container;
+use Nette\Utils\FileSystem;
 
 final class ContainerFactory
 {
@@ -17,9 +18,18 @@ final class ContainerFactory
     public function createWithConfig($config) : Container
     {
         $configurator = new Configurator();
-        $configurator->setTempDirectory(TEMP_DIR);
+        $configurator->setTempDirectory($this->createAndReturnTempDir());
         $configurator->addConfig($config);
 
         return $configurator->createContainer();
+    }
+
+    private function createAndReturnTempDir() : string
+    {
+        $tempDir = sys_get_temp_dir().'/multi_cs';
+        FileSystem::delete($tempDir);
+        FileSystem::createDir($tempDir);
+
+        return $tempDir;
     }
 }

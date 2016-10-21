@@ -23,7 +23,7 @@ final class MultiCsFileLoaderTest extends TestCase
     {
         $loadedFile = $this->multiCsFileLoader->load();
         $this->assertSame([
-           'key' => 'value'
+           'key' => 'value',
         ], $loadedFile);
     }
 }
