@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of Symplify
  * Copyright (c) 2016 Tomas Votruba (http://tomasvotruba.cz).
@@ -17,6 +19,7 @@ final class ConfigurationResolverFactory
     {
         $configurationResolver = new ConfigurationResolver();
         $configurationResolver->setAllFixers($this->getAllFixers());
+
         return $configurationResolver;
     }
 
@@ -27,6 +30,7 @@ final class ConfigurationResolverFactory
     {
         $fixer = new Fixer();
         $fixer->registerBuiltInFixers();
+
         return $fixer->getFixers();
     }
 }

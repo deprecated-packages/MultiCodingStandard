@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of Symplify
  * Copyright (c) 2016 Tomas Votruba (http://tomasvotruba.cz).
@@ -17,16 +19,17 @@ final class MultiCsFileLoader
      */
     private $multiCsJsonFile;
 
-    public function __construct(string $multiCsJsonFile)
+    public function __construct(string $multiCsJsonFile = null)
     {
-        $this->multiCsJsonFile = $multiCsJsonFile;
+        $this->multiCsJsonFile = $multiCsJsonFile ?: getcwd().'/multi-cs.json';
     }
 
     public function load() : array
     {
         $this->ensureFileExists($this->multiCsJsonFile);
-        
+
         $fileContent = file_get_contents($this->multiCsJsonFile);
+
         return Json::decode($fileContent, true);
     }
 

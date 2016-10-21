@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of Symplify
  * Copyright (c) 2016 Tomas Votruba (http://tomasvotruba.cz).
@@ -18,14 +20,14 @@ final class ContainerFactory
         $configurator = new Configurator();
         $configurator->setDebugMode(true);
         $configurator->setTempDirectory($this->createAndReturnTempDir());
-        $configurator->addConfig(__DIR__ . '/../config/config.neon');
+        $configurator->addConfig(__DIR__.'/../config/config.neon');
 
         return $configurator->createContainer();
     }
 
     private function createAndReturnTempDir() : string
     {
-        $tempDir = sys_get_temp_dir() . '/_multi-cs';
+        $tempDir = sys_get_temp_dir().'/_multi-cs';
         FileSystem::delete($tempDir);
         FileSystem::createDir($tempDir);
 

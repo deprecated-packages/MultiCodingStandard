@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of Symplify
  * Copyright (c) 2016 Tomas Votruba (http://tomasvotruba.cz).
@@ -57,7 +59,9 @@ final class Application
 
     private function registerFixersToFixer(array $fixerLevels, array $fixers, array $excludedFixers)
     {
-        $fixers = $this->fixerSetFactory->createFromLevelsFixersAndExcludedFixers($fixerLevels, $fixers, $excludedFixers);
+        $fixers = $this->fixerSetFactory->createFromLevelsFixersAndExcludedFixers(
+            $fixerLevels, $fixers, $excludedFixers
+        );
 
         $this->fixer->registerCustomFixers($fixers);
     }

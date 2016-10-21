@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of Symplify
  * Copyright (c) 2016 Tomas Votruba (http://tomasvotruba.cz).
@@ -31,7 +33,7 @@ final class ConsoleApplication extends Application
     {
         return new InputDefinition([
             new InputArgument('command', InputArgument::REQUIRED, 'The command to execute'),
-            new InputOption('--help', '-h', InputOption::VALUE_NONE, 'Display this help message')
+            new InputOption('--help', '-h', InputOption::VALUE_NONE, 'Display this help message'),
         ]);
     }
 }

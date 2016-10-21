@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of Symplify
  * Copyright (c) 2016 Tomas Votruba (http://tomasvotruba.cz).
@@ -25,7 +27,7 @@ final class FixerFactory
     /**
      * @return FixerInterface[]
      */
-    public function createFromLevelsFixersAndExcludedFixers(array $fixerLevels, array $fixers, array $excludedFixers) : array
+    public function createFromLevelsFixersAndExcludedFixers(array $fixerLevels, array $fixers, array $excludedFixers)
     {
         $fixersFromLevels = $this->createFromLevelsAndExcludedFixers($fixerLevels, $excludedFixers);
         $standaloneFixers = $this->createFromFixers($fixers);
@@ -57,6 +59,7 @@ final class FixerFactory
         }
 
         $fixersAsString = $this->turnFixersToString($fixers);
+
         return $this->resolveFixersForLevelsAndFixers('none', $fixersAsString);
     }
 
@@ -83,8 +86,9 @@ final class FixerFactory
     private function implodeWithPresign(array $items, string $presign = '')
     {
         if (count($items)) {
-            return $presign . implode(',' . $presign, $items);
+            return $presign.implode(','.$presign, $items);
         }
+
         return '';
     }
 }

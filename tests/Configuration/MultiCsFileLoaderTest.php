@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Symplify\MultiCodingStandard\Tests\Configuration;
 
 use PHPUnit\Framework\TestCase;
@@ -21,7 +23,7 @@ final class MultiCsFileLoaderTest extends TestCase
     {
         $loadedFile = $this->multiCsFileLoader->load();
         $this->assertSame([
-           'key' => 'value'
+           'key' => 'value',
         ], $loadedFile);
     }
 }

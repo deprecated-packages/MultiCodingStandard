@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of Symplify
  * Copyright (c) 2016 Tomas Votruba (http://tomasvotruba.cz).
@@ -9,7 +11,6 @@ namespace Symplify\MultiCodingStandard\Console\Output;
 
 use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Output\Output;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symplify\MultiCodingStandard\PhpCsFixer\Report\DiffDataCollector;
 use Symplify\PHP7_CodeSniffer\Console\Output\InfoMessagePrinter as PhpCodeSnifferInfoMessagePrinter;
 use Symplify\PHP7_CodeSniffer\Report\ErrorDataCollector;
@@ -73,7 +74,7 @@ class InfoMessagePrinter
 
     /**
      * Used original code from PHP-CS-FIXER/CS/Console/FixCommand.php
-     * https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/185c1758aadc942956e84accf1b24be9e2609718/Symfony/CS/Console/Command/FixCommand.php#L431-L493
+     * https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/185c1758aadc942956e84accf1b24be9e2609718/Symfony/CS/Console/Command/FixCommand.php#L431-L493.
      */
     private function printDiffs(array $diffs)
     {

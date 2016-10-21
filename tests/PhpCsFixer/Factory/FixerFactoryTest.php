@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Symplify\MultiCodingStandard\Tests\PhpCsFixer\Factory;
 
 use PHPUnit\Framework\TestCase;
@@ -23,8 +25,12 @@ final class FixerFactoryTest extends TestCase
     /**
      * @dataProvider provideCreateData
      */
-    public function testResolveFixerLevels(array $fixerLevels, array $fixers, array $excludedFixers, int $expectedFixerCount)
-    {
+    public function testResolveFixerLevels(
+        array $fixerLevels,
+        array $fixers,
+        array $excludedFixers,
+        int $expectedFixerCount
+    ) {
         $fixers = $this->fixerFactory->createFromLevelsFixersAndExcludedFixers($fixerLevels, $fixers, $excludedFixers);
         $this->assertCount($expectedFixerCount, $fixers);
 
@@ -43,7 +49,7 @@ final class FixerFactoryTest extends TestCase
             [['psr2'], [], [], 24],
             [['psr2'], [], ['visibility'],  23],
             [['psr1', 'psr2'], [], [], 27],
-            [['psr1', 'psr2'], [], ['visibility'], 26]
+            [['psr1', 'psr2'], [], ['visibility'], 26],
         ];
     }
 
@@ -51,6 +57,7 @@ final class FixerFactoryTest extends TestCase
     {
         $configurationResolver = new ConfigurationResolver();
         $configurationResolver->setAllFixers($this->getAllFixers());
+
         return $configurationResolver;
     }
 
@@ -61,6 +68,7 @@ final class FixerFactoryTest extends TestCase
     {
         $fixer = new Fixer();
         $fixer->registerBuiltInFixers();
+
         return $fixer->getFixers();
     }
 }
