@@ -16,12 +16,12 @@ final class MultiCodingStandardExtension extends CompilerExtension
      * @var string[]
      */
     private $defaults = [
-        'configPath' => '%appDir%/../../multi-cs.json'
+        'configPathsToCheck' => [
+            '%appDir%/../../../../multi-cs.json', # installed as dependency
+            '%appDir%/../../multi-cs.json', # cloned package
+        ]
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     public function loadConfiguration()
     {
         $this->setConfigToContainerBuilder($this->defaults);
@@ -34,7 +34,7 @@ final class MultiCodingStandardExtension extends CompilerExtension
     private function setConfigToContainerBuilder(array $defaults)
     {
         $config = $this->validateConfig($defaults);
-        $config['configPath'] = Helpers::expand($config['configPath'], $this->getContainerBuilder()->parameters);
+        $config['configPath'] = $this->detectConfigPath($config['configPathsToCheck']);
         $this->getContainerBuilder()->parameters += $config;
     }
 
@@ -43,5 +43,17 @@ final class MultiCodingStandardExtension extends CompilerExtension
         $containerBuilder = $this->getContainerBuilder();
         $config = $this->loadFromFile($configPath);
         $this->compiler->parseServices($containerBuilder, $config);
+    }
+
+    private function detectConfigPath(array $configPathsToCheck) : string
+    {
+        foreach ($configPathsToCheck as $configPathToCheck) {
+            $configPath = Helpers::expand($configPathToCheck, $this->getContainerBuilder()->parameters);
+            if (file_exists($configPath)) {
+                return $configPath;
+            }
+        }
+
+        return '';
     }
 }
