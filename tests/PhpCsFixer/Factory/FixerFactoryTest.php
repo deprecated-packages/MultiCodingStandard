@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Symplify\MultiCodingStandard\Tests\PhpCsFixer\Factory;
 
 use PHPUnit\Framework\TestCase;

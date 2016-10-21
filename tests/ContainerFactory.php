@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Symplify\MultiCodingStandard\Tests;
 
 use Nette\Configurator;
