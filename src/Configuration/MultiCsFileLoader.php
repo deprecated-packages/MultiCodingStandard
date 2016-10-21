@@ -21,7 +21,7 @@ final class MultiCsFileLoader
 
     public function __construct(string $multiCsJsonFile = null)
     {
-        $this->multiCsJsonFile = $multiCsJsonFile ?: getcwd().'/multi-cs.json';
+        $this->multiCsJsonFile = $multiCsJsonFile ?: getcwd().DIRECTORY_SEPARATOR.'multi-cs.json';
     }
 
     public function load() : array
