@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Symplify\MultiCodingStandard\Tests\PhpCsFixer\Factory;
 
+use PhpCsFixer\Fixer\FixerInterface;
 use PHPUnit\Framework\TestCase;
-use Symfony\CS\ConfigurationResolver;
-use Symfony\CS\Fixer;
-use Symfony\CS\FixerInterface;
 use Symplify\MultiCodingStandard\PhpCsFixer\Factory\FixerFactory;
 
 final class FixerFactoryTest extends TestCase
@@ -19,7 +17,7 @@ final class FixerFactoryTest extends TestCase
 
     protected function setUp()
     {
-        $this->fixerFactory = new FixerFactory($this->createConfigurationResolver());
+        $this->fixerFactory = new FixerFactory();
     }
 
     /**
@@ -44,31 +42,12 @@ final class FixerFactoryTest extends TestCase
     {
         return [
             [[], [], [], 0],
-            [[], ['array_element_no_space_before_comma'], [], 1],
-            [['psr1'], [], [], 3],
+            [[], ['no_whitespace_before_comma_in_array'], [], 1],
+            [['psr1'], [], [], 2],
             [['psr2'], [], [], 24],
-            [['psr2'], [], ['visibility'],  23],
-            [['psr1', 'psr2'], [], [], 27],
+            [['psr2'], [], ['visibility'],  24],
+            [['psr1', 'psr2'], [], [], 26],
             [['psr1', 'psr2'], [], ['visibility'], 26],
         ];
-    }
-
-    private function createConfigurationResolver() : ConfigurationResolver
-    {
-        $configurationResolver = new ConfigurationResolver();
-        $configurationResolver->setAllFixers($this->getAllFixers());
-
-        return $configurationResolver;
-    }
-
-    /**
-     * @return FixerInterface[]
-     */
-    private function getAllFixers() : array
-    {
-        $fixer = new Fixer();
-        $fixer->registerBuiltInFixers();
-
-        return $fixer->getFixers();
     }
 }

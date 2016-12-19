@@ -32,10 +32,7 @@ final class StyleFactory
         $this->output = $output;
     }
 
-    /**
-     * @return StyleInterface
-     */
-    public function create()
+    public function create() : StyleInterface
     {
         return new SymfonyStyle($this->input, $this->output);
     }

@@ -57,9 +57,6 @@ final class RunCommand extends Command
         $this->infoMessagePrinter = $infoMessagePrinter;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         $this->setName('run');
@@ -68,9 +65,6 @@ final class RunCommand extends Command
         $this->setDescription('Check coding standard in one or more directories.');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         try {

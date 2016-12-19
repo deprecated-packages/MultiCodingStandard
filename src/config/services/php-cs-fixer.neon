@@ -1,12 +1,7 @@
 services:
-    # native
-    - Symfony\CS\Fixer
-    - Symplify\MultiCodingStandard\PhpCsFixer\Configuration\ConfigurationResolverFactory
-    -
-        factory: [@Symplify\MultiCodingStandard\PhpCsFixer\Configuration\ConfigurationResolverFactory, "create"]
-
     # application
     - Symplify\MultiCodingStandard\PhpCsFixer\Factory\FixerFactory
     - Symplify\MultiCodingStandard\PhpCsFixer\Application\Application
 
     - Symplify\MultiCodingStandard\PhpCsFixer\Report\DiffDataCollector
+

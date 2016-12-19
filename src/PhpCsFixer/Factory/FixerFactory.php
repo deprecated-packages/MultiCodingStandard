@@ -9,21 +9,12 @@ declare(strict_types=1);
 
 namespace Symplify\MultiCodingStandard\PhpCsFixer\Factory;
 
-use Symfony\CS\ConfigurationResolver;
-use Symfony\CS\FixerInterface;
+use PhpCsFixer\Config;
+use PhpCsFixer\Console\ConfigurationResolver;
+use PhpCsFixer\Fixer\FixerInterface;
 
 final class FixerFactory
 {
-    /**
-     * @var ConfigurationResolver
-     */
-    private $configurationResolver;
-
-    public function __construct(ConfigurationResolver $configurationResolver)
-    {
-        $this->configurationResolver = $configurationResolver;
-    }
-
     /**
      * @return FixerInterface[]
      */
@@ -63,14 +54,17 @@ final class FixerFactory
         return $this->resolveFixersForLevelsAndFixers('none', $fixersAsString);
     }
 
+    /**
+     * @return FixerInterface[]
+     */
     private function resolveFixersForLevelsAndFixers(string $level, string $fixersAsString) : array
     {
-        $currentConfigurationResolver = clone $this->configurationResolver;
-        $currentConfigurationResolver->setOption('level', $level);
-        $currentConfigurationResolver->setOption('fixers', $fixersAsString);
-        $currentConfigurationResolver->resolve();
+        $config = new Config();
+        $configurationResolver = new ConfigurationResolver($config, [
+            'rules' => $this->combineSetAndFixersToRules($level, $fixersAsString)
+        ], getcwd());
 
-        return $currentConfigurationResolver->getFixers();
+        return $configurationResolver->getFixers();
     }
 
     private function turnFixersToString(array $fixers) : string
@@ -90,5 +84,22 @@ final class FixerFactory
         }
 
         return '';
+    }
+
+    private function combineSetAndFixersToRules(string $level, string $fixersAsString) : string
+    {
+        $rules = '';
+        if ($level && $level !== 'none')  {
+            $rules .= '@' . strtoupper($level);
+        }
+
+        if ($fixersAsString) {
+            if ($rules) {
+                $rules .= ',';
+            }
+            $rules .= $fixersAsString;
+        }
+
+        return $rules;
     }
 }

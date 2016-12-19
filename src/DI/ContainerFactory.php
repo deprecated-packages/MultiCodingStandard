@@ -27,7 +27,7 @@ final class ContainerFactory
 
     private function createAndReturnTempDir() : string
     {
-        $tempDir = sys_get_temp_dir().'/_multi-cs';
+        $tempDir = sys_get_temp_dir().'/symplify_multi_cs';
         FileSystem::delete($tempDir);
         FileSystem::createDir($tempDir);
 

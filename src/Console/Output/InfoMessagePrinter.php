@@ -15,7 +15,7 @@ use Symplify\MultiCodingStandard\PhpCsFixer\Report\DiffDataCollector;
 use Symplify\PHP7_CodeSniffer\Console\Output\InfoMessagePrinter as PhpCodeSnifferInfoMessagePrinter;
 use Symplify\PHP7_CodeSniffer\Report\ErrorDataCollector;
 
-class InfoMessagePrinter
+final class InfoMessagePrinter
 {
     /**
      * @var ErrorDataCollector

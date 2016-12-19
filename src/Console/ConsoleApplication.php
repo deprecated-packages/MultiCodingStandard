@@ -17,18 +17,12 @@ use Symplify\MultiCodingStandard\Console\Command\RunCommand;
 
 final class ConsoleApplication extends Application
 {
-    /**
-     * {@inheritdoc}
-     */
     public function __construct(RunCommand $runCommand)
     {
         parent::__construct('Symplify Coding Standard', null);
         $this->add($runCommand);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getDefaultInputDefinition() : InputDefinition
     {
         return new InputDefinition([

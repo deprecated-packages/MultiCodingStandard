@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Symplify\MultiCodingStandard\DI;
 
+use Nette\DI\Compiler;
 use Nette\DI\CompilerExtension;
 
 final class MultiCodingStandardExtension extends CompilerExtension
@@ -20,8 +21,9 @@ final class MultiCodingStandardExtension extends CompilerExtension
 
     private function loadServicesFromConfigPath(string $configPath)
     {
-        $containerBuilder = $this->getContainerBuilder();
-        $config = $this->loadFromFile($configPath);
-        $this->compiler->parseServices($containerBuilder, $config);
+        Compiler::loadDefinitions(
+            $this->getContainerBuilder(),
+            $this->loadFromFile($configPath)['services']
+        );
     }
 }
